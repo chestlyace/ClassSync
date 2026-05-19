@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#003fb1</color>
+    <color name="on_primary">#ffffff</color>
+    <color name="primary_container">#1a56db</color>
+    <color name="on_primary_container">#d4dcff</color>
+
+    <color name="secondary">#006c53</color>
+    <color name="on_secondary">#ffffff</color>
+    <color name="secondary_container">#89f7d1</color>
+    <color name="on_secondary_container">#007258</color>
+
+    <color name="tertiary">#694100</color>
+    <color name="on_tertiary">#ffffff</color>
+    <color name="tertiary_container">#895600</color>
+    <color name="on_tertiary_container">#ffd6a8</color>
+
+    <color name="error">#ba1a1a</color>
+    <color name="on_error">#ffffff</color>
+    <color name="error_container">#ffdad6</color>
+    <color name="on_error_container">#93000a</color>
+
+    <color name="background">#f9f9ff</color>
+    <color name="on_background">#141b2b</color>
+    <color name="surface">#f9f9ff</color>
+    <color name="on_surface">#141b2b</color>
+    <color name="surface_variant">#dce2f7</color>
+    <color name="on_surface_variant">#434654</color>
+    <color name="outline">#737686</color>
+    <color name="outline_variant">#c3c5d7</color>
+
+    <color name="surface_container">#e9edff</color>
+    <color name="surface_container_low">#f1f3ff</color>
+    <color name="surface_container_lowest">#ffffff</color>
+    <color name="surface_container_high">#e1e8fd</color>
+    <color name="surface_container_highest">#dce2f7</color>
 </resources>

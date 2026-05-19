@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splashFragment">
+
+    <!-- Auth Screens -->
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="com.example.classsync.ui.auth.SplashFragment"
+        android:label="SplashFragment"
+        tools:layout="@layout/fragment_splash" />
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.classsync.ui.auth.LoginFragment"
+        android:label="LoginFragment"
+        tools:layout="@layout/fragment_login" />
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.example.classsync.ui.auth.RegisterFragment"
+        android:label="RegisterFragment"
+        tools:layout="@layout/fragment_register" />
+
+    <!-- Teacher Screens -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.classsync.ui.teacher.TeacherHomeFragment"
+        android:label="TeacherHomeFragment"
+        tools:layout="@layout/fragment_teacher_home" />
+    <fragment
+        android:id="@+id/createCourseFragment"
+        android:name="com.example.classsync.ui.teacher.CreateCourseFragment"
+        android:label="CreateCourseFragment"
+        tools:layout="@layout/fragment_create_course" />
+    <fragment
+        android:id="@+id/courseDetailTeacherFragment"
+        android:name="com.example.classsync.ui.teacher.CourseDetailTeacherFragment"
+        android:label="CourseDetailTeacherFragment"
+        tools:layout="@layout/fragment_course_detail_teacher" />
+    <fragment
+        android:id="@+id/createAssignmentFragment"
+        android:name="com.example.classsync.ui.teacher.CreateAssignmentFragment"
+        android:label="CreateAssignmentFragment"
+        tools:layout="@layout/fragment_create_assignment" />
+    <fragment
+        android:id="@+id/assignmentOverviewTeacherFragment"
+        android:name="com.example.classsync.ui.teacher.AssignmentOverviewTeacherFragment"
+        android:label="AssignmentOverviewTeacherFragment"
+        tools:layout="@layout/fragment_assignment_overview_teacher" />
+
+    <!-- Student Screens -->
+    <fragment
+        android:id="@+id/studentHomeFragment"
+        android:name="com.example.classsync.ui.student.StudentHomeFragment"
+        android:label="StudentHomeFragment"
+        tools:layout="@layout/fragment_student_home" />
+    <fragment
+        android:id="@+id/joinCourseFragment"
+        android:name="com.example.classsync.ui.student.JoinCourseFragment"
+        android:label="JoinCourseFragment"
+        tools:layout="@layout/fragment_join_course" />
+    <fragment
+        android:id="@+id/nav_courses"
+        android:name="com.example.classsync.ui.student.MyCoursesFragment"
+        android:label="MyCoursesFragment"
+        tools:layout="@layout/fragment_my_courses" />
+    <fragment
+        android:id="@+id/assignmentDetailStudentFragment"
+        android:name="com.example.classsync.ui.student.AssignmentDetailStudentFragment"
+        android:label="AssignmentDetailStudentFragment"
+        tools:layout="@layout/fragment_assignment_detail_student" />
+    <fragment
+        android:id="@+id/groupLobbyFragment"
+        android:name="com.example.classsync.ui.student.GroupLobbyFragment"
+        android:label="GroupLobbyFragment"
+        tools:layout="@layout/fragment_group_lobby" />
+    <fragment
+        android:id="@+id/groupWorkspaceFragment"
+        android:name="com.example.classsync.ui.student.GroupWorkspaceFragment"
+        android:label="GroupWorkspaceFragment"
+        tools:layout="@layout/fragment_group_workspace" />
+    <fragment
+        android:id="@+id/addEditTaskFragment"
+        android:name="com.example.classsync.ui.student.AddEditTaskFragment"
+        android:label="AddEditTaskFragment"
+        tools:layout="@layout/fragment_add_edit_task" />
+
+    <!-- Shared Screens -->
+    <fragment
+        android:id="@+id/nav_notifications"
+        android:name="com.example.classsync.ui.shared.NotificationsFragment"
+        android:label="NotificationsFragment"
+        tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.classsync.ui.shared.ProfileFragment"
+        android:label="ProfileFragment"
+        tools:layout="@layout/fragment_profile" />
+
+</navigation>
