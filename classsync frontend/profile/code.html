@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#d3daef",
+                    "on-error-container": "#93000a",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#002117",
+                    "background": "#f9f9ff",
+                    "tertiary-fixed": "#ffddb8",
+                    "on-surface-variant": "#434654",
+                    "on-secondary": "#ffffff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-primary-fixed-variant": "#003dab",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-low": "#f1f3ff",
+                    "secondary": "#006c53",
+                    "inverse-surface": "#293040",
+                    "secondary-fixed": "#89f7d1",
+                    "on-tertiary-fixed": "#2a1700",
+                    "surface-tint": "#1353d8",
+                    "on-tertiary-container": "#ffd6a8",
+                    "tertiary-container": "#895600",
+                    "on-error": "#ffffff",
+                    "on-secondary-container": "#007258",
+                    "primary-container": "#1a56db",
+                    "on-primary-container": "#d4dcff",
+                    "primary-fixed-dim": "#b5c4ff",
+                    "on-surface": "#141b2b",
+                    "tertiary": "#694100",
+                    "surface-variant": "#dce2f7",
+                    "on-primary": "#ffffff",
+                    "surface-container-highest": "#dce2f7",
+                    "surface-bright": "#f9f9ff",
+                    "on-primary-fixed": "#00174d",
+                    "primary": "#003fb1",
+                    "inverse-primary": "#b5c4ff",
+                    "outline-variant": "#c3c5d7",
+                    "error-container": "#ffdad6",
+                    "outline": "#737686",
+                    "secondary-fixed-dim": "#6cdab6",
+                    "inverse-on-surface": "#edf0ff",
+                    "surface-container-high": "#e1e8fd",
+                    "on-secondary-fixed-variant": "#00513e",
+                    "error": "#ba1a1a",
+                    "surface-container": "#e9edff",
+                    "surface": "#f9f9ff",
+                    "secondary-container": "#89f7d1",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-background": "#141b2b",
+                    "primary-fixed": "#dbe1ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "icon-size-md": "24px",
+                    "margin-page": "16px",
+                    "gutter-stack": "12px",
+                    "padding-card": "16px",
+                    "touch-target-height": "52px"
+            },
+            "fontFamily": {
+                    "body-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"]
+            },
+            "fontSize": {
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            user-select: none;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9ff;
+        }
+        .ios-active-state:active {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface antialiased flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full h-14 z-50 flex items-center px-margin-page bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline">
+<div class="flex items-center w-full">
+<span class="material-symbols-outlined text-primary mr-4 cursor-pointer" data-icon="arrow_back">arrow_back</span>
+<h1 class="font-headline-sm text-headline-sm-mobile text-on-surface">Profile</h1>
+<div class="ml-auto">
+<span class="material-symbols-outlined text-primary" data-icon="settings">settings</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-grow pt-14 pb-[80px] px-margin-page">
+<!-- Header Section (Centered) -->
+<section class="flex flex-col items-center pt-8 pb-6 bg-surface-container-lowest rounded-xl mt-4 border border-outline-variant">
+<div class="relative mb-4">
+<div class="w-[100px] h-[100px] rounded-full border-2 border-primary p-0.5">
+<img alt="Alex Johnson" class="w-full h-full object-cover rounded-full" data-alt="A professional close-up portrait of a friendly male university student in his early twenties. He has a clean-cut appearance, short brown hair, and is wearing a classic navy blue collared shirt. The background is a soft, blurred library setting with warm, scholarly lighting that reinforces a focused academic atmosphere. The overall style is modern and high-contrast, matching a professional digital portfolio aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2CgNfkeAD_9OcxF4iWUjrKCIE8a0-CQGWRiSRAOGRf5olPMdpaNnJ8rZ44toQ1iMfZP6FTNzrk2KZ9GhuwYhBvDc8eI80cLfGENyStCzXcLZ6m-OwsYYDWqPjHmPcqzZjjUU4ixUEVyir_42_sqklPZ_rp3aDZ-l7YR6V9t8T6c7KriilBJZ57QzI2qThSwNvhA1ktKksWDqnsmz1WYd3wCY8wjIObjiIUoHbxoAAWC0MI9Oxmx6b4mARwk6_s_f6iqhjdCGmJmgy"/>
+</div>
+<div class="absolute bottom-0 right-0 bg-primary text-white p-1 rounded-full border-2 border-white">
+<span class="material-symbols-outlined text-[16px]" data-icon="edit">edit</span>
+</div>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface mb-2">Alex Johnson</h2>
+<div class="inline-flex items-center px-4 py-1.5 bg-primary-container text-on-primary-container rounded-full mb-4">
+<span class="material-symbols-outlined mr-2 text-[18px]" data-icon="school">school</span>
+<span class="font-label-md text-label-md">Student</span>
+</div>
+<div class="w-full px-8 flex justify-around mt-2">
+<div class="text-center">
+<p class="font-headline-sm text-headline-sm text-primary">3.8</p>
+<p class="font-label-sm text-label-sm text-outline">GPA</p>
+</div>
+<div class="text-center border-x border-outline-variant px-8">
+<p class="font-headline-sm text-headline-sm text-primary">5</p>
+<p class="font-label-sm text-label-sm text-outline">Courses</p>
+</div>
+<div class="text-center">
+<p class="font-headline-sm text-headline-sm text-primary">12</p>
+<p class="font-label-sm text-label-sm text-outline">Tasks</p>
+</div>
+</div>
+</section>
+<!-- Settings List -->
+<section class="mt-gutter-stack space-y-1">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden">
+<!-- Edit Profile -->
+<button class="w-full h-[52px] flex items-center px-4 ios-active-state transition-colors group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="person">person</span>
+<span class="ml-4 font-body-md text-body-md text-on-surface flex-grow text-left">Edit profile</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="mx-4 border-b border-outline-variant"></div>
+<!-- Notification Preferences -->
+<button class="w-full h-[52px] flex items-center px-4 ios-active-state transition-colors group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="notifications">notifications</span>
+<span class="ml-4 font-body-md text-body-md text-on-surface flex-grow text-left">Notification preferences</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="mx-4 border-b border-outline-variant"></div>
+<!-- Change Password -->
+<button class="w-full h-[52px] flex items-center px-4 ios-active-state transition-colors group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="lock">lock</span>
+<span class="ml-4 font-body-md text-body-md text-on-surface flex-grow text-left">Change password</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+<div class="mx-4 border-b border-outline-variant"></div>
+<!-- Accessibility -->
+<button class="w-full h-[52px] flex items-center px-4 ios-active-state transition-colors group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-colors" data-icon="accessibility">accessibility</span>
+<span class="ml-4 font-body-md text-body-md text-on-surface flex-grow text-left">Accessibility</span>
+<span class="material-symbols-outlined text-outline-variant" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+<!-- Logout Section -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden mt-4">
+<button class="w-full h-[52px] flex items-center px-4 ios-active-state transition-colors group">
+<span class="material-symbols-outlined text-error" data-icon="logout">logout</span>
+<span class="ml-4 font-body-md text-body-md text-error flex-grow text-left">Log out</span>
+</button>
+</div>
+</section>
+<!-- Footer -->
+<footer class="mt-8 pb-4 text-center">
+<p class="font-label-sm text-label-sm text-outline">v1.0.4</p>
+<p class="font-label-sm text-label-sm text-outline-variant mt-1">© 2024 ClassSync Academic Solutions</p>
+</footer>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 left-0 w-full h-[64px] z-50 flex justify-around items-center px-4 bg-surface dark:bg-on-background border-t border-outline-variant dark:border-outline">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-sm text-label-sm">Courses</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm">Alerts</span>
+</a>
+<a class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed font-bold bg-secondary-container/20 dark:bg-on-secondary-fixed-variant/30 rounded-xl px-3 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-icon="person" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple ripple effect for buttons
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                let ripple = document.createElement('span');
+                ripple.classList.add('ripple');
+                this.appendChild(ripple);
+                let d = Math.max(this.clientWidth, this.clientHeight);
+                ripple.style.width = ripple.style.height = d + 'px';
+                ripple.style.left = e.clientX - this.offsetLeft - d / 2 + 'px';
+                ripple.style.top = e.clientY - this.offsetTop - d / 2 + 'px';
+                ripple.classList.add('active');
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+    </script>
+<style>
+        /* Minimalist ripple animation style */
+        .ripple {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: scale(0);
+            pointer-events: none;
+        }
+        .ripple.active {
+            animation: ripple-animation 0.6s linear;
+        }
+        @keyframes ripple-animation {
+            to {
+                transform: scale(2.5);
+                opacity: 0;
+            }
+        }
+    </style>
+</body></html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ClassSync - Create Account</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline": "#737686",
+                        "surface-dim": "#d3daef",
+                        "on-background": "#141b2b",
+                        "on-surface-variant": "#434654",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#dce2f7",
+                        "secondary-fixed": "#89f7d1",
+                        "error-container": "#ffdad6",
+                        "inverse-primary": "#b5c4ff",
+                        "inverse-on-surface": "#edf0ff",
+                        "on-secondary-fixed-variant": "#00513e",
+                        "outline-variant": "#c3c5d7",
+                        "primary": "#003fb1",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f9f9ff",
+                        "on-primary-container": "#d4dcff",
+                        "on-secondary-container": "#007258",
+                        "secondary-container": "#89f7d1",
+                        "tertiary-container": "#895600",
+                        "on-surface": "#141b2b",
+                        "secondary": "#006c53",
+                        "on-secondary-fixed": "#002117",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-tertiary-fixed": "#2a1700",
+                        "error": "#ba1a1a",
+                        "surface-container-highest": "#dce2f7",
+                        "tertiary": "#694100",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-container": "#e9edff",
+                        "surface-bright": "#f9f9ff",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-tertiary-container": "#ffd6a8",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e1e8fd",
+                        "surface-tint": "#1353d8",
+                        "surface-container-low": "#f1f3ff",
+                        "secondary-fixed-dim": "#6cdab6",
+                        "on-tertiary": "#ffffff",
+                        "primary-container": "#1a56db",
+                        "on-primary-fixed": "#00174d",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#293040",
+                        "surface": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "touch-target-height": "52px",
+                        "padding-card": "16px",
+                        "margin-page": "16px",
+                        "icon-size-md": "24px",
+                        "gutter-stack": "12px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                        "headline-sm-mobile": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        input:focus {
+            outline: none;
+            border-color: #003fb1;
+            box-shadow: 0 0 0 2px rgba(0, 63, 177, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full h-14 z-50 flex items-center px-margin-page bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline">
+<div class="flex items-center gap-4 w-full">
+<button class="material-symbols-outlined text-primary" data-icon="arrow_back">arrow_back</button>
+<span class="font-headline-md text-headline-md text-primary dark:text-inverse-primary">ClassSync</span>
+<div class="flex-grow"></div>
+<button class="material-symbols-outlined text-on-surface-variant" data-icon="settings">settings</button>
+</div>
+</header>
+<main class="flex-grow pt-20 px-margin-page pb-10 max-w-lg mx-auto w-full">
+<section class="mb-8">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2">Create your account</h1>
+<p class="font-body-md text-on-surface-variant">Join our professional academic workspace.</p>
+</section>
+<form class="space-y-gutter-stack" id="registrationForm" onsubmit="event.preventDefault();">
+<!-- Role Selector -->
+<div class="grid grid-cols-2 gap-4 mb-6">
+<button class="flex flex-col items-center justify-center p-6 border border-outline-variant rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low group" id="role-teacher" onclick="selectRole('teacher')" type="button">
+<span class="material-symbols-outlined text-[32px] mb-2 text-on-surface-variant group-data-[active=true]:text-secondary" data-icon="co_present">co_present</span>
+<span class="font-label-md text-label-md">Teacher</span>
+</button>
+<button class="flex flex-col items-center justify-center p-6 border border-outline-variant rounded-xl bg-surface-container-lowest transition-all duration-200 hover:bg-surface-container-low group" data-active="true" id="role-student" onclick="selectRole('student')" type="button">
+<span class="material-symbols-outlined text-[32px] mb-2 text-on-surface-variant group-data-[active=true]:text-primary" data-icon="school">school</span>
+<span class="font-label-md text-label-md">Student</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1" for="fullName">Full name</label>
+<input class="w-full h-touch-target-height px-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md" id="fullName" placeholder="Enter your full name" type="text"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1" for="email">Email address</label>
+<input class="w-full h-touch-target-height px-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md" id="email" placeholder="name@school.edu" type="email"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1" for="password">Password</label>
+<input class="w-full h-touch-target-height px-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md" id="password" placeholder="Min. 8 characters" type="password"/>
+</div>
+<div class="flex flex-col gap-1">
+<label class="font-label-sm text-label-sm text-on-surface-variant ml-1" for="confirmPassword">Confirm password</label>
+<input class="w-full h-touch-target-height px-4 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md" id="confirmPassword" placeholder="Repeat your password" type="password"/>
+</div>
+<button class="w-full h-touch-target-height bg-primary text-on-primary rounded-lg font-label-md text-label-md mt-6 transition-all active:scale-[0.98] hover:opacity-90" id="submitBtn" type="submit">
+                Create account
+            </button>
+</form>
+<div class="mt-8 text-center">
+<p class="font-body-md text-on-surface-variant">
+                Already have an account? 
+                <a class="text-primary font-label-md hover:underline" href="#">Log in</a>
+</p>
+</div>
+</main>
+<!-- Visual Decoration / Bento elements for background feel -->
+<div class="fixed top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10"></div>
+<div class="fixed bottom-10 -left-20 w-64 h-64 bg-secondary/5 rounded-full blur-3xl -z-10"></div>
+<script>
+        let currentRole = 'student';
+
+        function selectRole(role) {
+            currentRole = role;
+            const teacherBtn = document.getElementById('role-teacher');
+            const studentBtn = document.getElementById('role-student');
+            const submitBtn = document.getElementById('submitBtn');
+
+            // Reset states
+            teacherBtn.removeAttribute('data-active');
+            teacherBtn.classList.remove('border-secondary', 'bg-secondary-container/20', 'text-on-secondary-container');
+            teacherBtn.classList.add('border-outline-variant', 'bg-surface-container-lowest');
+
+            studentBtn.removeAttribute('data-active');
+            studentBtn.classList.remove('border-primary', 'bg-primary-container/10', 'text-primary');
+            studentBtn.classList.add('border-outline-variant', 'bg-surface-container-lowest');
+
+            if (role === 'teacher') {
+                teacherBtn.setAttribute('data-active', 'true');
+                teacherBtn.classList.remove('border-outline-variant', 'bg-surface-container-lowest');
+                teacherBtn.classList.add('border-secondary', 'bg-secondary-container/20', 'text-on-secondary-container');
+                teacherBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+                studentBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+                
+                // Switch button color
+                submitBtn.classList.remove('bg-primary');
+                submitBtn.classList.add('bg-secondary');
+            } else {
+                studentBtn.setAttribute('data-active', 'true');
+                studentBtn.classList.remove('border-outline-variant', 'bg-surface-container-lowest');
+                studentBtn.classList.add('border-primary', 'bg-primary-container/10', 'text-primary');
+                studentBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 1";
+                teacherBtn.querySelector('.material-symbols-outlined').style.fontVariationSettings = "'FILL' 0";
+                
+                // Switch button color
+                submitBtn.classList.remove('bg-secondary');
+                submitBtn.classList.add('bg-primary');
+            }
+        }
+
+        // Initialize with Student selected
+        window.onload = () => selectRole('student');
+    </script>
+</body></html>

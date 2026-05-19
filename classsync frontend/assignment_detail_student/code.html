@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Assignment Detail - ClassSync</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "tertiary-fixed": "#ffddb8",
+                        "surface-container-highest": "#dce2f7",
+                        "outline-variant": "#c3c5d7",
+                        "tertiary-fixed-dim": "#ffb95f",
+                        "on-tertiary-container": "#ffd6a8",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary-fixed": "#2a1700",
+                        "outline": "#737686",
+                        "secondary-fixed-dim": "#6cdab6",
+                        "background": "#f9f9ff",
+                        "primary-container": "#1a56db",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed-variant": "#00513e",
+                        "surface-container-low": "#f1f3ff",
+                        "on-surface-variant": "#434654",
+                        "on-tertiary-fixed-variant": "#653e00",
+                        "on-primary-fixed": "#00174d",
+                        "inverse-primary": "#b5c4ff",
+                        "primary": "#003fb1",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-bright": "#f9f9ff",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed": "#89f7d1",
+                        "surface-dim": "#d3daef",
+                        "on-secondary-fixed": "#002117",
+                        "on-primary-container": "#d4dcff",
+                        "inverse-surface": "#293040",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "secondary-container": "#89f7d1",
+                        "on-secondary-container": "#007258",
+                        "secondary": "#006c53",
+                        "surface-container": "#e9edff",
+                        "tertiary-container": "#895600",
+                        "on-primary": "#ffffff",
+                        "on-surface": "#141b2b",
+                        "on-error": "#ffffff",
+                        "tertiary": "#694100",
+                        "surface-container-high": "#e1e8fd",
+                        "on-background": "#141b2b",
+                        "inverse-on-surface": "#edf0ff",
+                        "surface-tint": "#1353d8",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-variant": "#dce2f7",
+                        "surface": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin-page": "16px",
+                        "padding-card": "16px",
+                        "gutter-stack": "12px",
+                        "touch-target-height": "52px",
+                        "icon-size-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "headline-sm": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                        "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9f9ff;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .custom-shadow {
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+        }
+        .animate-subtle-pulse {
+            animation: pulse-border 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-border {
+            0%, 100% { border-color: rgba(0, 108, 83, 0.3); }
+            50% { border-color: rgba(0, 108, 83, 0.8); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- Top App Bar -->
+<header class="fixed top-0 w-full h-14 z-50 flex items-center px-margin-page bg-surface dark:bg-on-background border-b border-outline-variant dark:border-outline">
+<div class="flex items-center w-full">
+<button class="mr-4 h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors duration-200">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex flex-col flex-grow overflow-hidden">
+<span class="font-label-sm text-label-sm text-on-surface-variant truncate">CS504: Advanced UX Research</span>
+<span class="font-headline-sm text-headline-sm text-primary dark:text-primary-fixed-dim truncate">Research Synthesis Report</span>
+</div>
+<button class="h-10 w-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors duration-200">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</div>
+</header>
+<!-- Content Canvas -->
+<main class="pt-20 pb-24 px-margin-page max-w-3xl mx-auto">
+<!-- Main Heading -->
+<h1 class="font-headline-lg text-headline-lg mb-gutter-stack text-on-surface">Research Synthesis Report</h1>
+<!-- Assignment Card -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-padding-card custom-shadow mb-gutter-stack">
+<!-- Type Badge -->
+<div class="inline-flex items-center px-3 py-1 rounded-full bg-primary-container/10 text-primary-container font-label-sm text-label-sm mb-4 border border-primary-container/20">
+<span class="material-symbols-outlined text-[14px] mr-1" data-weight="fill" style="font-variation-settings: 'FILL' 1;">groups</span>
+                Group Assignment
+            </div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant mb-6 leading-relaxed">
+                Synthesize your interview findings into a cohesive report. Identify five key personas, develop empathy maps, and define the primary problem statements for your assigned user base. Ensure all sources are cited according to university standards.
+            </p>
+<!-- Metadata Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-outline-variant">
+<!-- Posted By -->
+<div class="flex items-center">
+<img alt="Dr. Sarah Chen" class="w-10 h-10 rounded-full object-cover mr-3 bg-surface-container-high" data-alt="A professional headshot of a middle-aged female professor, Dr. Sarah Chen, with a warm and knowledgeable expression. She is wearing glasses and a smart blazer, set against a blurred academic office background with books and soft daylight. The aesthetic is clean, professional, and trustworthy, using a light and airy color palette consistent with a modern academic interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDoMl9wRaxwMo8NsWLoVRzFSLwOzLRl0A3OKNIoz547xYUqMqITdNRbSHGvEA4KxemZ6o-DYaEPPO1MEPurucqx6eNpDU2LA67prqhPPODPe2XO-O9u8Kpd8XYLTmNFfLPp8S604kPWpG_cc-Y92RnfuIz0CFFsUJLXMiYeO2PeMpzJ1ooqq85ZTlS3QSPFp5h9xdDvw6V5EaUpOGZqWUQYeyjf1IFtR_8vNZNoPdnXp7jrvxakmu8Gq7_UheirIZE29Vi3n-Nu7_HK"/>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Posted by</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">Dr. Sarah Chen</span>
+</div>
+</div>
+<!-- Due Date -->
+<div class="flex items-center">
+<div class="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center mr-3 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant">calendar_today</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Due Date</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">Oct 18, 11:59 PM</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Deadline Countdown -->
+<div class="flex items-center mb-6 pl-1">
+<span class="material-symbols-outlined text-tertiary mr-2 animate-pulse">timer</span>
+<span class="font-headline-sm text-headline-sm text-tertiary">Due in 4 days</span>
+</div>
+<!-- Group Status Banner -->
+<div class="bg-secondary-container/10 border border-secondary-container rounded-xl p-padding-card animate-subtle-pulse">
+<div class="flex items-start mb-4">
+<div class="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center mr-3">
+<span class="material-symbols-outlined text-secondary">group_add</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-secondary-container">Not in a group yet</h3>
+<p class="font-body-md text-body-md text-on-secondary-fixed-variant">This assignment requires a group of 3-4 members. Join an existing group or create a new one to begin your submission.</p>
+</div>
+</div>
+<button class="w-full h-[52px] bg-secondary text-on-secondary rounded-lg font-label-md text-label-md flex items-center justify-center hover:opacity-90 active:scale-[0.98] transition-all duration-150">
+                Find or create a group
+            </button>
+</div>
+<!-- Submission Section Empty State -->
+<div class="mt-8 pt-8 border-t border-outline-variant text-center">
+<div class="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-4 border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-4xl">upload_file</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface">No submission yet</h4>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Complete your group formation to enable the submission portal.</p>
+<button class="w-full h-[52px] bg-outline-variant text-on-surface-variant rounded-lg font-label-md text-label-md flex items-center justify-center cursor-not-allowed opacity-50" disabled="">
+                Submit Assignment
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full h-[64px] z-50 flex justify-around items-center px-4 bg-surface dark:bg-on-background border-t border-outline-variant dark:border-outline">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center text-primary dark:text-secondary-fixed font-bold bg-secondary-container/20 dark:bg-on-secondary-fixed-variant/30 rounded-xl px-3 py-1 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined" data-weight="fill" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<!-- Courses -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:opacity-80 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-label-sm text-label-sm">Courses</span>
+</a>
+<!-- Alerts -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:opacity-80 active:scale-95 transition-transform duration-150 relative" href="#">
+<span class="material-symbols-outlined">notifications</span>
+<span class="font-label-sm text-label-sm">Alerts</span>
+<div class="absolute top-0 right-3 w-2 h-2 bg-error rounded-full border-2 border-surface"></div>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:opacity-80 active:scale-95 transition-transform duration-150" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Micro-interactions
+        document.querySelectorAll('button:not(:disabled), a').forEach(el => {
+            el.addEventListener('click', () => {
+                // Haptic feedback simulation
+                if (window.navigator && window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            });
+        });
+    </script>
+</body></html>

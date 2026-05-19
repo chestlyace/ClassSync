@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Teacher Home - ClassSync</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline": "#737686",
+                    "surface-dim": "#d3daef",
+                    "on-background": "#141b2b",
+                    "on-surface-variant": "#434654",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#dce2f7",
+                    "secondary-fixed": "#89f7d1",
+                    "error-container": "#ffdad6",
+                    "inverse-primary": "#b5c4ff",
+                    "inverse-on-surface": "#edf0ff",
+                    "on-secondary-fixed-variant": "#00513e",
+                    "outline-variant": "#c3c5d7",
+                    "primary": "#003fb1",
+                    "primary-fixed": "#dbe1ff",
+                    "surface-container-lowest": "#ffffff",
+                    "background": "#f9f9ff",
+                    "on-primary-container": "#d4dcff",
+                    "on-secondary-container": "#007258",
+                    "secondary-container": "#89f7d1",
+                    "tertiary-container": "#895600",
+                    "on-surface": "#141b2b",
+                    "secondary": "#0D9373",
+                    "on-secondary-fixed": "#002117",
+                    "primary-fixed-dim": "#b5c4ff",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#003dab",
+                    "on-tertiary-fixed": "#2a1700",
+                    "error": "#ba1a1a",
+                    "surface-container-highest": "#dce2f7",
+                    "tertiary": "#694100",
+                    "tertiary-fixed": "#ffddb8",
+                    "surface-container": "#e9edff",
+                    "surface-bright": "#f9f9ff",
+                    "on-tertiary-fixed-variant": "#653e00",
+                    "on-tertiary-container": "#ffd6a8",
+                    "on-secondary": "#ffffff",
+                    "surface-container-high": "#e1e8fd",
+                    "surface-tint": "#1353d8",
+                    "surface-container-low": "#f1f3ff",
+                    "secondary-fixed-dim": "#6cdab6",
+                    "on-tertiary": "#ffffff",
+                    "primary-container": "#1a56db",
+                    "on-primary-fixed": "#00174d",
+                    "tertiary-fixed-dim": "#ffb95f",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#293040",
+                    "surface": "#f9f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "touch-target-height": "52px",
+                    "padding-card": "16px",
+                    "margin-page": "16px",
+                    "icon-size-md": "24px",
+                    "gutter-stack": "12px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "headline-lg": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-lg-mobile": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-sm": ["16px", {"lineHeight": "24px", "fontWeight": "700"}],
+                    "headline-sm-mobile": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+                    "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-md": ["20px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F8F9FA;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .stat-card {
+            border: 1px solid #E5E7EB;
+            min-width: 110px;
+        }
+        .course-card {
+            border: 1px solid #E5E7EB;
+            border-left: 4px solid #0D9373;
+        }
+        .safe-area-bottom {
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="text-on-surface">
+<!-- Top App Bar / Header Shell -->
+<header class="fixed top-0 w-full h-[180px] z-50 flex flex-col bg-secondary text-on-secondary px-margin-page pt-4">
+<div class="flex justify-between items-center w-full mb-4">
+<h1 class="font-headline-md text-headline-md">ClassSync</h1>
+<div class="flex items-center gap-3">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full border-2 border-white/20 overflow-hidden">
+<img alt="Teacher Avatar" class="w-full h-full object-cover" data-alt="A professional headshot of a middle-aged female professor with a warm smile, wearing academic attire. The background is a soft-focus university library with rows of books. The lighting is natural and bright, creating an atmosphere of expertise and friendliness. The overall aesthetic is clean and academic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZWTOmVbDpCTCeKn3xmSqVYZv4IQafqaTbwOpsKuVIE_fETAElYVdKa1hueEVnmlZ6tLXTYFPxpCl9HxkiXKkhx0PGCC01mq8SAlx99msPgiZZ30kWTrOPtPbFQV2gEF7mVa-UqD2ZyNpXPqIgjCs1AgWih7Hemlv_WZoVGUnBBArXitcZr2chguQkSvKjUuZuEvjK24RaIoK8wHJH0JoiZrOOdIsZzIWlJASt8K6x_ygcYVshXgnzPnjXUaWYCAXpUqKcgvZac7qv"/>
+</div>
+</div>
+</div>
+<div class="mt-2">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:text-headline-lg md:font-headline-lg">Good morning, Dr. Smith</h2>
+<p class="font-body-md text-body-md opacity-90 mt-1">You have 3 active courses.</p>
+</div>
+</header>
+<main class="mt-[180px] px-margin-page pb-24">
+<!-- Quick Stats Container -->
+<div class="relative -mt-6 z-50 flex gap-3 overflow-x-auto no-scrollbar pb-2">
+<!-- Stat Card 1 -->
+<div class="stat-card bg-surface p-3 rounded-xl flex flex-col gap-1 flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="group">group</span>
+<span class="font-headline-sm text-headline-sm">12</span>
+<span class="font-label-sm text-label-sm text-outline">Students</span>
+</div>
+<!-- Stat Card 2 -->
+<div class="stat-card bg-surface p-3 rounded-xl flex flex-col gap-1 flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="assignment">assignment</span>
+<span class="font-headline-sm text-headline-sm">5</span>
+<span class="font-label-sm text-label-sm text-outline">Assignments</span>
+</div>
+<!-- Stat Card 3 -->
+<div class="stat-card bg-surface p-3 rounded-xl flex flex-col gap-1 flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-error" data-icon="timer">timer</span>
+<span class="font-headline-sm text-headline-sm">2</span>
+<span class="font-label-sm text-label-sm text-outline">Due Soon</span>
+</div>
+</div>
+<!-- Section Heading -->
+<div class="flex justify-between items-center mt-8 mb-4">
+<h3 class="font-headline-sm text-headline-sm">My Courses</h3>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center border border-outline-variant text-secondary hover:bg-secondary-container/10 transition-colors">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+</button>
+</div>
+<!-- Course Cards List -->
+<div class="flex flex-col gap-gutter-stack">
+<!-- Course Card 1 -->
+<div class="course-card bg-surface p-padding-card rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm">Advanced Calculus II</h4>
+<span class="material-symbols-outlined text-outline" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">24 Students</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="task">task</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3 Active Tasks</span>
+</div>
+</div>
+<div class="mt-2 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-3/4 rounded-full"></div>
+</div>
+</div>
+<!-- Course Card 2 -->
+<div class="course-card bg-surface p-padding-card rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm">Discrete Mathematics</h4>
+<span class="material-symbols-outlined text-outline" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">18 Students</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="task">task</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">1 Active Task</span>
+</div>
+</div>
+<div class="mt-2 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-1/4 rounded-full"></div>
+</div>
+</div>
+<!-- Course Card 3 -->
+<div class="course-card bg-surface p-padding-card rounded-xl shadow-sm flex flex-col gap-2">
+<div class="flex justify-between items-start">
+<h4 class="font-headline-sm text-headline-sm">Linear Algebra Foundations</h4>
+<span class="material-symbols-outlined text-outline" data-icon="more_vert">more_vert</span>
+</div>
+<div class="flex items-center gap-4 mt-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">32 Students</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-outline text-[18px]" data-icon="task">task</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">5 Active Tasks</span>
+</div>
+</div>
+<div class="mt-2 w-full bg-surface-container-low h-1.5 rounded-full overflow-hidden">
+<div class="bg-secondary h-full w-1/2 rounded-full"></div>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<button class="fixed right-6 bottom-24 w-14 h-14 bg-primary text-on-primary rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-40">
+<span class="material-symbols-outlined text-[28px]" data-icon="add">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 w-full h-[64px] z-50 flex justify-around items-center px-4 bg-surface border-t border-outline-variant safe-area-bottom">
+<!-- Home (Active) -->
+<a class="flex flex-col items-center justify-center text-primary font-bold bg-secondary-container/20 rounded-xl px-3 py-1 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="home" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<!-- Courses -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span class="font-label-sm text-label-sm">Courses</span>
+</a>
+<!-- Notifications -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="font-label-sm text-label-sm">Alerts</span>
+</a>
+<!-- Profile -->
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:opacity-80 transition-transform duration-150 active:scale-95" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm">Profile</span>
+</a>
+</nav>
+<script>
+        // Simple touch feedback and micro-interactions
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('touchstart', () => {
+                card.classList.add('bg-surface-container-low');
+            });
+            card.addEventListener('touchend', () => {
+                card.classList.remove('bg-surface-container-low');
+            });
+        });
+
+        // Sticky header opacity effect on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.style.boxShadow = '0 4px 6px -1px rgb(0 0 0 / 0.1)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body></html>
