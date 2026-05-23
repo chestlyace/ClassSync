@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">ClassSync</string>
+    <string name="task_initial_lit_review"><s>Initial literature review</s></string>
+    <string name="task_problem_set_derivation"><s>Problem set derivation</s></string>
+    <string name="task_literature_review"><s>Literature Review</s></string>
+    <string name="task_draft_introduction"><s>Draft Introduction</s></string>
 </resources>

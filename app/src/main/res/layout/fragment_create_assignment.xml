@@ -1,79 +1,323 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:background="@color/background">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Post Assignment"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+    <!-- Top AppBar -->
+    <LinearLayout
+        android:id="@+id/top_app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:hint="Assignment Title">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="56dp"
+        android:background="@color/secondary_bright"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:elevation="1dp">
 
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:hint="Due Date">
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:focusable="false"
-            android:text="Select Date" />
-    </com.google.android.material.textfield.TextInputLayout>
+        <ImageButton
+            android:id="@+id/btn_close"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Close"
+            android:padding="8dp"
+            android:src="@drawable/ic_close"
+            app:tint="@color/on_secondary" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Assignment Type"
-        android:textStyle="bold" />
-
-    <com.google.android.material.button.MaterialButtonToggleGroup
-        android:id="@+id/type_toggle_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        app:singleSelection="true"
-        app:selectionRequired="true">
-        <Button
-            android:id="@+id/type_individual"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+        <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Individual" />
+            android:fontFamily="sans-serif-bold"
+            android:text="New Assignment"
+            android:textColor="@color/on_secondary"
+            android:textSize="16sp"
+            android:gravity="center" />
+
         <Button
-            android:id="@+id/type_group"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Group" />
-    </com.google.android.material.button.MaterialButtonToggleGroup>
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:fontFamily="sans-serif-bold"
+            android:text="Save"
+            android:textColor="@color/on_secondary"
+            android:textSize="14sp"
+            android:textAllCaps="false"
+            style="?android:attr/borderlessButtonStyle"/>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_post"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:layout_marginTop="32dp"
-        android:text="Post Assignment"
-        android:backgroundTint="@color/secondary" />
+        android:layout_height="1dp"
+        android:layout_marginTop="56dp"
+        android:background="@color/outline_variant" />
 
-</LinearLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="57dp"
+        android:paddingBottom="100dp"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Title Input -->
+            <EditText
+                android:id="@+id/input_title"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/selector_input_field"
+                android:hint="Assignment Title"
+                android:paddingHorizontal="16dp"
+                android:textColorHint="@color/outline"
+                android:textColor="@color/on_surface"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:inputType="text"
+                android:singleLine="true" />
+
+            <!-- Description Input -->
+            <EditText
+                android:id="@+id/input_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minLines="4"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/selector_input_field"
+                android:hint="Description"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="12dp"
+                android:textColorHint="@color/outline"
+                android:textColor="@color/on_surface"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif"
+                android:inputType="textMultiLine"
+                android:gravity="top" />
+
+            <!-- Due Date Field -->
+            <LinearLayout
+                android:id="@+id/btn_due_date"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_input_field"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Due Date"
+                        android:textColor="@color/on_surface_variant"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/text_due_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif"
+                        android:text="Select date and time"
+                        android:textColor="@color/on_surface"
+                        android:textSize="14sp" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_calendar"
+                    app:tint="@color/on_surface_variant" />
+            </LinearLayout>
+
+            <!-- Assignment Type Segmented Control -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginStart="4dp"
+                android:fontFamily="sans-serif-medium"
+                android:text="Assignment Type"
+                android:textColor="@color/on_surface_variant"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_segmented_control"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <Button
+                    android:id="@+id/btn_type_individual"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_segmented_button_active"
+                    app:backgroundTint="@null"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Individual"
+                    android:textAllCaps="false"
+                    android:textColor="@color/on_secondary"
+                    android:textSize="14sp"
+                    style="?android:attr/borderlessButtonStyle" />
+
+                <Button
+                    android:id="@+id/btn_type_group"
+                    android:layout_width="0dp"
+                    android:layout_height="40dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_segmented_button_inactive"
+                    app:backgroundTint="@null"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Group"
+                    android:textAllCaps="false"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="14sp"
+                    style="?android:attr/borderlessButtonStyle" />
+            </LinearLayout>
+
+            <!-- Expandable Group Section -->
+            <LinearLayout
+                android:id="@+id/group_section"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_group_section"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Max group size"
+                        android:textColor="@color/on_secondary_container"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Recommended: 3-5 students"
+                        android:textColor="@color/outline"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_input_field"
+                    android:orientation="horizontal"
+                    android:padding="4dp"
+                    android:gravity="center_vertical">
+
+                    <ImageButton
+                        android:id="@+id/btn_stepper_minus"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_remove"
+                        app:tint="@color/secondary" />
+
+                    <TextView
+                        android:id="@+id/text_stepper_value"
+                        android:layout_width="24dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-bold"
+                        android:gravity="center"
+                        android:text="2"
+                        android:textColor="@color/on_surface"
+                        android:textSize="16sp" />
+
+                    <ImageButton
+                        android:id="@+id/btn_stepper_plus"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_add"
+                        app:tint="@color/secondary" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Attachments Placeholder -->
+            <LinearLayout
+                android:id="@+id/btn_add_attachment"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="24dp"
+                android:background="@drawable/bg_dashed_border"
+                android:clickable="true"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_attach_file"
+                    app:tint="@color/on_surface_variant" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="Add resources or templates"
+                    android:textColor="@color/on_surface_variant"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Action Area -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/surface"
+        android:elevation="8dp"
+        android:padding="16dp">
+
+        <Button
+            android:id="@+id/btn_post"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_button_secondary"
+            app:backgroundTint="@color/secondary"
+            android:fontFamily="sans-serif-medium"
+            android:text="Post Assignment"
+            android:textAllCaps="false"
+            android:textColor="@color/on_secondary"
+            android:textSize="14sp"
+            android:stateListAnimator="@null" />
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

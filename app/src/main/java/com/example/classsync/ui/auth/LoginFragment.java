@@ -1,10 +1,14 @@
 package com.example.classsync.ui.auth;
 
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +20,8 @@ import com.example.classsync.data.UserSession;
 
 public class LoginFragment extends Fragment {
 
+    private boolean passwordVisible = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -26,8 +32,24 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        EditText passwordEditText = view.findViewById(R.id.password_edit_text);
+        ImageButton passwordToggle = view.findViewById(R.id.password_toggle);
         Button loginButton = view.findViewById(R.id.login_button);
         Button registerButton = view.findViewById(R.id.register_button);
+
+        // Password visibility toggle
+        passwordToggle.setOnClickListener(v -> {
+            passwordVisible = !passwordVisible;
+            if (passwordVisible) {
+                passwordEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                passwordToggle.setImageResource(R.drawable.ic_visibility_off);
+            } else {
+                passwordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                passwordToggle.setImageResource(R.drawable.ic_visibility);
+            }
+            // Move cursor to end of text
+            passwordEditText.setSelection(passwordEditText.getText().length());
+        });
 
         loginButton.setOnClickListener(v -> {
             // Mock login as Teacher for now, or based on some toggle

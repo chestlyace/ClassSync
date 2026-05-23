@@ -23,7 +23,19 @@ public class AddEditTaskFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        // Close / Back navigation
+        view.findViewById(R.id.btn_back).setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).navigateUp();
+        });
+
+        // Save button navigates back
         view.findViewById(R.id.btn_save_task).setOnClickListener(v -> {
+            NavHostFragment.findNavController(this).popBackStack();
+        });
+
+        // Delete button navigates back
+        view.findViewById(R.id.btn_delete_task).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).popBackStack();
         });
     }

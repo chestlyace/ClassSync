@@ -6,6 +6,7 @@
     <color name="on_primary_container">#d4dcff</color>
 
     <color name="secondary">#006c53</color>
+    <color name="secondary_bright">#0D9373</color>
     <color name="on_secondary">#ffffff</color>
     <color name="secondary_container">#89f7d1</color>
     <color name="on_secondary_container">#007258</color>
@@ -34,4 +35,11 @@
     <color name="surface_container_lowest">#ffffff</color>
     <color name="surface_container_high">#e1e8fd</color>
     <color name="surface_container_highest">#dce2f7</color>
+
+    <color name="primary_fixed">#dbe1ff</color>
+    <color name="on_primary_fixed">#00174d</color>
+    <color name="secondary_fixed">#89f7d1</color>
+    <color name="on_secondary_fixed">#002117</color>
+    <color name="tertiary_fixed">#ffddb8</color>
+    <color name="on_tertiary_fixed">#2a1700</color>
 </resources>

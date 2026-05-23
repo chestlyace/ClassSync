@@ -48,6 +48,11 @@
         android:name="com.example.classsync.ui.teacher.AssignmentOverviewTeacherFragment"
         android:label="AssignmentOverviewTeacherFragment"
         tools:layout="@layout/fragment_assignment_overview_teacher" />
+    <fragment
+        android:id="@+id/teacherCourseListFragment"
+        android:name="com.example.classsync.ui.teacher.TeacherCourseListFragment"
+        android:label="TeacherCourseListFragment"
+        tools:layout="@layout/fragment_teacher_course_list" />
 
     <!-- Student Screens -->
     <fragment
@@ -85,6 +90,11 @@
         android:name="com.example.classsync.ui.student.AddEditTaskFragment"
         android:label="AddEditTaskFragment"
         tools:layout="@layout/fragment_add_edit_task" />
+    <fragment
+        android:id="@+id/studentCourseAssignmentsFragment"
+        android:name="com.example.classsync.ui.student.StudentCourseAssignmentsFragment"
+        android:label="StudentCourseAssignmentsFragment"
+        tools:layout="@layout/fragment_student_course_assignments" />
 
     <!-- Shared Screens -->
     <fragment

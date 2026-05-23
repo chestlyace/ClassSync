@@ -23,8 +23,21 @@ public class MyCoursesFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        view.findViewById(R.id.fab_join_course).setOnClickListener(v -> {
+
+        // Header Actions
+        view.findViewById(R.id.btn_join_course).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.joinCourseFragment);
         });
+
+        // Course Cards Navigation
+        View.OnClickListener cardClickListener = v -> {
+            NavHostFragment.findNavController(this).navigate(R.id.studentCourseAssignmentsFragment);
+        };
+
+        view.findViewById(R.id.course_card_1).setOnClickListener(cardClickListener);
+        view.findViewById(R.id.course_card_2).setOnClickListener(cardClickListener);
+        view.findViewById(R.id.course_card_3).setOnClickListener(cardClickListener);
+
+
     }
 }

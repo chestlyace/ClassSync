@@ -24,16 +24,21 @@ public class TeacherHomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Course card navigation
         view.findViewById(R.id.course_card_1).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.courseDetailTeacherFragment);
         });
 
+        // FAB - add course
         view.findViewById(R.id.fab_add_course).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.createCourseFragment);
         });
 
+        // Small add course button in section header
         view.findViewById(R.id.btn_add_course_small).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigate(R.id.createCourseFragment);
         });
+
+
     }
 }
