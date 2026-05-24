@@ -16,8 +16,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.Timestamp;
 import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.Timestamp;
 
 import java.util.Arrays;
 import java.util.Collections;

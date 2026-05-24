@@ -87,8 +87,8 @@
         tools:layout="@layout/fragment_assignment_detail_student">
         <argument android:name="courseId" app:argType="string" />
         <argument android:name="assignmentId" app:argType="string" />
-        <argument android:name="assignmentTitle" app:argType="string" />
-        <argument android:name="maxGroupSize" app:argType="integer" />
+        <argument android:name="assignmentTitle" app:argType="string" android:defaultValue="" />
+        <argument android:name="maxGroupSize" app:argType="integer" android:defaultValue="4" />
     </fragment>
     <fragment
         android:id="@+id/groupLobbyFragment"
@@ -97,8 +97,8 @@
         tools:layout="@layout/fragment_group_lobby">
         <argument android:name="courseId" app:argType="string" />
         <argument android:name="assignmentId" app:argType="string" />
-        <argument android:name="assignmentTitle" app:argType="string" />
-        <argument android:name="maxGroupSize" app:argType="integer" />
+        <argument android:name="assignmentTitle" app:argType="string" android:defaultValue="" />
+        <argument android:name="maxGroupSize" app:argType="integer" android:defaultValue="4" />
     </fragment>
     <fragment
         android:id="@+id/groupWorkspaceFragment"

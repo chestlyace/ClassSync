@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
     implementation(libs.firebase.storage)
+    implementation(libs.firebase.messaging)
     implementation(libs.glide)
     implementation(libs.appcompat)
     implementation(libs.material)
@@ -60,6 +61,9 @@ dependencies {
     // Lifecycle (ViewModel & LiveData)
     implementation(libs.lifecycle.viewmodel)
     implementation(libs.lifecycle.livedata)
+
+    // WorkManager
+    implementation(libs.work.runtime)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)

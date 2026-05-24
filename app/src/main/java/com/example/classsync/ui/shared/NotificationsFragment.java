@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.classsync.R;
 import com.example.classsync.data.UserSession;
 import com.example.classsync.data.firebase.AuthRepository;
+import com.example.classsync.data.firebase.FirestorePaths;
 import com.example.classsync.data.model.AppNotification;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -95,7 +96,7 @@ public class NotificationsFragment extends Fragment {
         if (uid.isEmpty()) return;
 
         listener = FirebaseFirestore.getInstance()
-                .collection("notifications")
+                .collection(FirestorePaths.NOTIFICATIONS)
                 .whereEqualTo("recipientId", uid)
                 .orderBy("createdAt", Query.Direction.DESCENDING)
                 .limit(50)
@@ -167,7 +168,7 @@ public class NotificationsFragment extends Fragment {
     private void markRead(AppNotification notification) {
         if (notification.isRead()) return;
         FirebaseFirestore.getInstance()
-                .collection("notifications")
+                .collection(FirestorePaths.NOTIFICATIONS)
                 .document(notification.getNotificationId())
                 .update("isRead", true);
     }
@@ -177,7 +178,7 @@ public class NotificationsFragment extends Fragment {
         if (uid.isEmpty()) return;
 
         FirebaseFirestore.getInstance()
-                .collection("notifications")
+                .collection(FirestorePaths.NOTIFICATIONS)
                 .whereEqualTo("recipientId", uid)
                 .whereEqualTo("isRead", false)
                 .get()

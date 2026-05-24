@@ -17,13 +17,7 @@
         { "fieldPath": "isArchived", "order": "ASCENDING" }
       ]
     },
-    {
-      "collectionGroup": "assignments",
-      "queryScope": "COLLECTION",
-      "fields": [
-        { "fieldPath": "dueDate", "order": "ASCENDING" }
-      ]
-    },
+
     {
       "collectionGroup": "notifications",
       "queryScope": "COLLECTION",

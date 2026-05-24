@@ -31,7 +31,13 @@ Android classroom management app (Java, Firebase Auth + Firestore).
   `users/{uid}`, `courses/{id}`, then subcollections: `assignments`, `groups`, `tasks`.
 - `firestore.rules` at root — only allows user-level read/write to their own `users/{uid}` doc.
 - `google-services.json` required in `app/` for Firebase init.
-- `dataconnect/` is a separate Firebase Data Connect (PostgreSQL) experiment — not used by the Android app.
+- `storage.rules` at root — avatar uploads to `avatars/{uid}` with 2MB limit and image/* content type.
+- `firestore.indexes.json` at root — composite indexes for courses, assignments, notifications.
+- Cloud Functions (commented out, preserved in `functions/index.js`) replaced by client-side logic:
+  - **New assignments**: pulled on app open (`StudentHomeFragment.java`)
+  - **Deadline reminders**: `WorkManager` periodic worker (`DeadlineReminderWorker.java`)
+  - **Task completion alerts**: `addSnapshotListener` in `GroupWorkspaceFragment.java`
+- Local notifications via `NotificationHelper.java` with channels for deadlines, assignments, task updates.
 
 ## Notable
 

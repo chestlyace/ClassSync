@@ -12,10 +12,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onNewToken(@NonNull String token) {
         if (FirebaseAuth.getInstance().getCurrentUser() == null) return;
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            FirebaseFirestore.getInstance()
-                    .collection("users")
-                    .document(uid)
-                    .update("fcmToken", token);
-        }
+        FirebaseFirestore.getInstance()
+                .collection("users")
+                .document(uid)
+                .update("fcmToken", token);
     }
 }
