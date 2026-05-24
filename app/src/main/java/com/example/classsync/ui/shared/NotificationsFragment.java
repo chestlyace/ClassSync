@@ -4,9 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,28 +11,36 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.classsync.R;
 import com.example.classsync.data.UserSession;
+import com.example.classsync.data.firebase.AuthRepository;
+import com.example.classsync.data.model.AppNotification;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.WriteBatch;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class NotificationsFragment extends Fragment {
 
     private boolean isTeacher = false;
     private int themeColor;
-    private int themeContainerColor;
 
     private TextView tabAll, tabDeadlines, tabTasks;
-    private TextView btnMarkAllRead, appTitle;
+    private RecyclerView recycler;
+    private View emptyState;
 
-    // Rows & separators
-    private LinearLayout rowDeadlineUnread, rowAssignmentUnread, rowTaskRead, rowDeadlineRead, rowTaskRead2;
-    private View sep1, sep2, sep3, sep4;
-    private View accentUnread1, accentUnread2;
-    private FrameLayout iconBgAssignment;
-    private ImageView iconAssignment;
-
-    private LinearLayout notificationsListContainer;
-    private LinearLayout emptyStateContainer;
+    private final List<AppNotification> allNotifications = new ArrayList<>();
+    private final List<AppNotification> filteredNotifications = new ArrayList<>();
+    private NotificationAdapter adapter;
+    private ListenerRegistration listener;
 
     private enum ActiveTab { ALL, DEADLINES, TASKS }
     private ActiveTab currentTab = ActiveTab.ALL;
@@ -50,191 +55,145 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Fetch User Session for Role Color Scheme
         UserSession session = new UserSession(requireContext());
-        isTeacher = "TEACHER".equals(session.getUserRole());
+        isTeacher = AuthRepository.ROLE_TEACHER.equals(session.getUserRole());
+        themeColor = ContextCompat.getColor(requireContext(),
+                isTeacher ? R.color.secondary : R.color.primary);
 
-        // Setup colors based on role (Teacher: green, Student: blue)
-        themeColor = ContextCompat.getColor(requireContext(), isTeacher ? R.color.secondary : R.color.primary);
-        themeContainerColor = ContextCompat.getColor(requireContext(), isTeacher ? R.color.secondary_container : R.color.primary_fixed);
-
-        // Bind Views
-        appTitle = view.findViewById(R.id.app_title);
-        btnMarkAllRead = view.findViewById(R.id.btn_mark_all_read);
+        view.<TextView>findViewById(R.id.app_title).setTextColor(themeColor);
+        view.<TextView>findViewById(R.id.btn_mark_all_read).setTextColor(themeColor);
 
         tabAll = view.findViewById(R.id.tab_all);
         tabDeadlines = view.findViewById(R.id.tab_deadlines);
         tabTasks = view.findViewById(R.id.tab_tasks);
 
-        rowDeadlineUnread = view.findViewById(R.id.row_deadline_unread);
-        rowAssignmentUnread = view.findViewById(R.id.row_assignment_unread);
-        rowTaskRead = view.findViewById(R.id.row_task_read);
-        rowDeadlineRead = view.findViewById(R.id.row_deadline_read);
-        rowTaskRead2 = view.findViewById(R.id.row_task_read_2);
+        recycler = view.findViewById(R.id.notifications_recycler);
+        emptyState = view.findViewById(R.id.empty_state_container);
 
-        sep1 = view.findViewById(R.id.sep_1);
-        sep2 = view.findViewById(R.id.sep_2);
-        sep3 = view.findViewById(R.id.sep_3);
-        sep4 = view.findViewById(R.id.sep_4);
+        view.findViewById(R.id.btn_settings).setOnClickListener(v ->
+                Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show());
 
-        accentUnread1 = view.findViewById(R.id.accent_unread_1);
-        accentUnread2 = view.findViewById(R.id.accent_unread_2);
-
-        iconBgAssignment = view.findViewById(R.id.icon_bg_assignment);
-        iconAssignment = view.findViewById(R.id.icon_assignment);
-
-        notificationsListContainer = view.findViewById(R.id.notifications_list_container);
-        emptyStateContainer = view.findViewById(R.id.empty_state_container);
-
-        // Apply Dynamic Theme Colors
-        appTitle.setTextColor(themeColor);
-        btnMarkAllRead.setTextColor(themeColor);
-        accentUnread1.setBackgroundColor(themeColor);
-        accentUnread2.setBackgroundColor(themeColor);
-
-        // Dynamic tints for the new assignment notification icon
-        iconBgAssignment.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), isTeacher ? R.color.secondary_container : R.color.primary_fixed));
-        iconAssignment.setImageTintList(ContextCompat.getColorStateList(requireContext(), isTeacher ? R.color.secondary : R.color.primary));
-
-        // Settings Button Action
-        view.findViewById(R.id.btn_settings).setOnClickListener(v -> {
-            Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
-        });
-
-        // Setup filter tab click listeners
         tabAll.setOnClickListener(v -> selectTab(ActiveTab.ALL));
         tabDeadlines.setOnClickListener(v -> selectTab(ActiveTab.DEADLINES));
         tabTasks.setOnClickListener(v -> selectTab(ActiveTab.TASKS));
 
-        // Unread Row 1 Click (Mark read)
-        rowDeadlineUnread.setOnClickListener(v -> {
-            markRead(rowDeadlineUnread, accentUnread1);
+        view.findViewById(R.id.btn_mark_all_read).setOnClickListener(v -> {
+            markAllRead();
         });
 
-        // Unread Row 2 Click (Mark read)
-        rowAssignmentUnread.setOnClickListener(v -> {
-            markRead(rowAssignmentUnread, accentUnread2);
-            // also dim the assignment icon container
-            iconBgAssignment.setAlpha(0.6f);
-        });
+        recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        adapter = new NotificationAdapter(filteredNotifications,
+                notification -> markRead(notification));
+        recycler.setAdapter(adapter);
 
-        // Other rows click (feedback toast)
-        View.OnClickListener standardRowListener = v -> {
-            Toast.makeText(requireContext(), "Notification details...", Toast.LENGTH_SHORT).show();
-        };
-        rowTaskRead.setOnClickListener(standardRowListener);
-        rowDeadlineRead.setOnClickListener(standardRowListener);
-        rowTaskRead2.setOnClickListener(standardRowListener);
-
-        // Mark All as Read button
-        btnMarkAllRead.setOnClickListener(v -> {
-            markRead(rowDeadlineUnread, accentUnread1);
-            markRead(rowAssignmentUnread, accentUnread2);
-            iconBgAssignment.setAlpha(0.6f);
-            Toast.makeText(requireContext(), "All notifications marked as read", Toast.LENGTH_SHORT).show();
-        });
-
-        // Initial tab styling
         updateTabStyles();
+        listenForNotifications();
     }
 
-    private void markRead(LinearLayout row, View accentView) {
-        row.setBackgroundColor(ContextCompat.getColor(requireContext(), R.color.surface_container_lowest));
-        accentView.setVisibility(View.GONE);
+    private void listenForNotifications() {
+        String uid = new UserSession(requireContext()).getUserUid();
+        if (uid.isEmpty()) return;
+
+        listener = FirebaseFirestore.getInstance()
+                .collection("notifications")
+                .whereEqualTo("recipientId", uid)
+                .orderBy("createdAt", Query.Direction.DESCENDING)
+                .limit(50)
+                .addSnapshotListener((snapshots, error) -> {
+                    if (error != null || snapshots == null) return;
+
+                    allNotifications.clear();
+                    for (QueryDocumentSnapshot doc : snapshots) {
+                        AppNotification notif = doc.toObject(AppNotification.class);
+                        if (notif != null) {
+                            notif.setNotificationId(doc.getId());
+                            allNotifications.add(notif);
+                        }
+                    }
+                    applyFilter();
+                });
     }
 
-    private void selectTab(ActiveTab selectedTab) {
-        currentTab = selectedTab;
+    private void selectTab(ActiveTab tab) {
+        currentTab = tab;
         updateTabStyles();
         applyFilter();
     }
 
     private void updateTabStyles() {
-        // Reset all tabs to inactive
-        tabAll.setBackgroundResource(R.drawable.bg_segmented_button_inactive);
-        tabAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant));
-        tabAll.setElevation(0);
+        resetTab(tabAll);
+        resetTab(tabDeadlines);
+        resetTab(tabTasks);
 
-        tabDeadlines.setBackgroundResource(R.drawable.bg_segmented_button_inactive);
-        tabDeadlines.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant));
-        tabDeadlines.setElevation(0);
+        TextView active = currentTab == ActiveTab.ALL ? tabAll
+                : currentTab == ActiveTab.DEADLINES ? tabDeadlines : tabTasks;
+        active.setBackgroundResource(R.drawable.bg_segmented_active);
+        active.setTextColor(themeColor);
+        active.setElevation(4f);
+    }
 
-        tabTasks.setBackgroundResource(R.drawable.bg_segmented_button_inactive);
-        tabTasks.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant));
-        tabTasks.setElevation(0);
-
-        // Apply active state
-        TextView activeTabTextView = null;
-        switch (currentTab) {
-            case ALL:
-                activeTabTextView = tabAll;
-                break;
-            case DEADLINES:
-                activeTabTextView = tabDeadlines;
-                break;
-            case TASKS:
-                activeTabTextView = tabTasks;
-                break;
-        }
-
-        if (activeTabTextView != null) {
-            activeTabTextView.setBackgroundResource(R.drawable.bg_segmented_active);
-            activeTabTextView.setTextColor(themeColor);
-            activeTabTextView.setElevation(4f); // add slight shadow/elevation
-        }
+    private void resetTab(TextView tab) {
+        tab.setBackgroundResource(R.drawable.bg_segmented_button_inactive);
+        tab.setTextColor(ContextCompat.getColor(requireContext(), R.color.on_surface_variant));
+        tab.setElevation(0);
     }
 
     private void applyFilter() {
-        int visibleCount = 0;
-
-        switch (currentTab) {
-            case ALL:
-                rowDeadlineUnread.setVisibility(View.VISIBLE);
-                sep1.setVisibility(View.VISIBLE);
-                rowAssignmentUnread.setVisibility(View.VISIBLE);
-                sep2.setVisibility(View.VISIBLE);
-                rowTaskRead.setVisibility(View.VISIBLE);
-                sep3.setVisibility(View.VISIBLE);
-                rowDeadlineRead.setVisibility(View.VISIBLE);
-                sep4.setVisibility(View.VISIBLE);
-                rowTaskRead2.setVisibility(View.VISIBLE);
-                visibleCount = 5;
-                break;
-
-            case DEADLINES:
-                rowDeadlineUnread.setVisibility(View.VISIBLE);
-                sep1.setVisibility(View.GONE);
-                rowAssignmentUnread.setVisibility(View.GONE);
-                sep2.setVisibility(View.GONE);
-                rowTaskRead.setVisibility(View.GONE);
-                sep3.setVisibility(View.GONE);
-                rowDeadlineRead.setVisibility(View.VISIBLE);
-                sep4.setVisibility(View.GONE);
-                rowTaskRead2.setVisibility(View.GONE);
-                visibleCount = 2;
-                break;
-
-            case TASKS:
-                rowDeadlineUnread.setVisibility(View.GONE);
-                sep1.setVisibility(View.GONE);
-                rowAssignmentUnread.setVisibility(View.GONE);
-                sep2.setVisibility(View.GONE);
-                rowTaskRead.setVisibility(View.VISIBLE);
-                sep3.setVisibility(View.GONE);
-                rowDeadlineRead.setVisibility(View.GONE);
-                sep4.setVisibility(View.GONE);
-                rowTaskRead2.setVisibility(View.VISIBLE);
-                visibleCount = 2;
-                break;
+        filteredNotifications.clear();
+        for (AppNotification notif : allNotifications) {
+            switch (currentTab) {
+                case ALL:
+                    filteredNotifications.add(notif);
+                    break;
+                case DEADLINES:
+                    if ("deadline_reminder".equals(notif.getType())) {
+                        filteredNotifications.add(notif);
+                    }
+                    break;
+                case TASKS:
+                    if ("task_done".equals(notif.getType())) {
+                        filteredNotifications.add(notif);
+                    }
+                    break;
+            }
         }
+        adapter.notifyDataSetChanged();
 
-        // Handle empty state (though in our mock, visibleCount will always be > 0)
-        if (visibleCount == 0) {
-            notificationsListContainer.setVisibility(View.GONE);
-            emptyStateContainer.setVisibility(View.VISIBLE);
-        } else {
-            notificationsListContainer.setVisibility(View.VISIBLE);
-            emptyStateContainer.setVisibility(View.GONE);
-        }
+        boolean empty = filteredNotifications.isEmpty();
+        recycler.setVisibility(empty ? View.GONE : View.VISIBLE);
+        emptyState.setVisibility(empty ? View.VISIBLE : View.GONE);
+    }
+
+    private void markRead(AppNotification notification) {
+        if (notification.isRead()) return;
+        FirebaseFirestore.getInstance()
+                .collection("notifications")
+                .document(notification.getNotificationId())
+                .update("isRead", true);
+    }
+
+    private void markAllRead() {
+        String uid = new UserSession(requireContext()).getUserUid();
+        if (uid.isEmpty()) return;
+
+        FirebaseFirestore.getInstance()
+                .collection("notifications")
+                .whereEqualTo("recipientId", uid)
+                .whereEqualTo("isRead", false)
+                .get()
+                .addOnSuccessListener(snapshots -> {
+                    WriteBatch batch = FirebaseFirestore.getInstance().batch();
+                    for (DocumentSnapshot doc : snapshots.getDocuments()) {
+                        batch.update(doc.getReference(), "isRead", true);
+                    }
+                    batch.commit();
+                    Toast.makeText(requireContext(), "All marked as read", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (listener != null) listener.remove();
+        super.onDestroyView();
     }
 }

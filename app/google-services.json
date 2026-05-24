@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53986610513",
+    "project_id": "classync-5ed54",
+    "storage_bucket": "classync-5ed54.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53986610513:android:d6fa01c7c6bfe472b55770",
+        "android_client_info": {
+          "package_name": "com.chestlyace.classync"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDULlVvM8VMXLWddCX9L2TMbx1ZrCwcp7Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

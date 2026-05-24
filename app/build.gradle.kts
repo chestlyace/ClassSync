@@ -1,4 +1,5 @@
 plugins {
+    id("com.google.gms.google-services")
     alias(libs.plugins.android.application)
 }
 
@@ -11,7 +12,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.classsync"
+        applicationId = "com.chestlyace.classync"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
@@ -42,6 +43,11 @@ java {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:34.13.0"))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
+    implementation(libs.glide)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

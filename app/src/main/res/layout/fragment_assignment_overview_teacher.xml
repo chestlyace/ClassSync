@@ -35,17 +35,19 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/title_text"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ellipsize="end"
                 android:fontFamily="sans-serif-bold"
                 android:maxLines="1"
-                android:text="Multivariable Integration"
+                android:text="Assignment"
                 android:textColor="@color/on_secondary"
                 android:textSize="16sp" />
 
             <TextView
+                android:id="@+id/status_badge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -87,10 +89,11 @@
                 android:padding="16dp">
 
                 <TextView
+                    android:id="@+id/description_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
-                    android:text="Complete the problem set on multivariable integration. Ensure all team members contribute to the final submission."
+                    android:text=""
                     android:textColor="@color/on_surface_variant"
                     android:textSize="14sp" />
 
@@ -108,11 +111,12 @@
                         app:tint="@color/primary" />
 
                     <TextView
+                        android:id="@+id/due_date_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Oct 15, 2024, 11:59 PM"
+                        android:text=""
                         android:textColor="@color/primary"
                         android:textSize="14sp" />
                 </LinearLayout>
@@ -141,460 +145,33 @@
                         android:textSize="16sp" />
 
                     <TextView
+                        android:id="@+id/groups_progress_text"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="4 of 6 max"
+                        android:text=""
                         android:textColor="@color/outline"
                         android:textSize="12sp" />
                 </LinearLayout>
 
                 <ProgressBar
+                    android:id="@+id/groups_progress_bar"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:layout_width="match_parent"
                     android:layout_height="6dp"
                     android:layout_marginTop="8dp"
                     android:progressDrawable="@drawable/bg_progress_track"
-                    android:progress="66"
+                    android:progress="0"
                     android:progressTint="@color/secondary" />
             </LinearLayout>
 
-            <!-- Group Cards List -->
-            <LinearLayout
+            <!-- Groups List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/groups_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:orientation="vertical">
-
-                <!-- Group Alpha: Expanded View -->
-                <LinearLayout
-                    android:id="@+id/group_alpha"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_group_card_expanded"
-                    android:orientation="vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:orientation="horizontal">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-bold"
-                                android:text="Group Alpha"
-                                android:textColor="@color/on_surface"
-                                android:textSize="16sp" />
-
-                            <FrameLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="32dp"
-                                android:layout_marginTop="8dp">
-
-                                <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:src="@drawable/bg_avatar_placeholder"
-                                    android:background="@drawable/bg_avatar_stroke" />
-
-                                <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:layout_marginStart="24dp"
-                                    android:src="@drawable/bg_avatar_placeholder"
-                                    android:background="@drawable/bg_avatar_stroke" />
-
-                                <ImageView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:layout_marginStart="48dp"
-                                    android:src="@drawable/bg_avatar_placeholder"
-                                    android:background="@drawable/bg_avatar_stroke" />
-
-                                <TextView
-                                    android:layout_width="32dp"
-                                    android:layout_height="32dp"
-                                    android:layout_marginStart="72dp"
-                                    android:background="@drawable/bg_avatar_stroke"
-                                    android:backgroundTint="@color/surface_container_highest"
-                                    android:gravity="center"
-                                    android:text="+2"
-                                    android:textColor="@color/outline"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </FrameLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:gravity="end"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-medium"
-                                android:text="3/5 tasks done"
-                                android:textColor="@color/secondary"
-                                android:textSize="12sp" />
-
-                            <ProgressBar
-                                style="?android:attr/progressBarStyleHorizontal"
-                                android:layout_width="64dp"
-                                android:layout_height="4dp"
-                                android:layout_marginTop="4dp"
-                                android:progressDrawable="@drawable/bg_progress_track"
-                                android:progress="60"
-                                android:progressTint="@color/secondary" />
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#7FFFFFFF" /> <!-- 50% opacity border -->
-
-                    <!-- Expanded Task List -->
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/bg_task_list_container"
-                        android:orientation="vertical"
-                        android:padding="16dp">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="16dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check_box"
-                                app:tint="@color/secondary" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif"
-                                    android:text="@string/task_initial_lit_review"
-                                    android:textColor="@color/on_surface_variant"
-                                    android:textSize="14sp"
-                                    android:alpha="0.6" /> <!-- simulate line-through with opacity -->
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:background="@drawable/bg_badge_student_completed"
-                                    android:paddingHorizontal="8dp"
-                                    android:paddingVertical="2dp"
-                                    android:text="Marcus"
-                                    android:textColor="@color/outline"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="16dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check_box"
-                                app:tint="@color/secondary" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif"
-                                    android:text="@string/task_problem_set_derivation"
-                                    android:textColor="@color/on_surface_variant"
-                                    android:textSize="14sp"
-                                    android:alpha="0.6" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:background="@drawable/bg_badge_student_completed"
-                                    android:paddingHorizontal="8dp"
-                                    android:paddingVertical="2dp"
-                                    android:text="Sarah"
-                                    android:textColor="@color/outline"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:layout_marginBottom="16dp">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check_box_outline_blank"
-                                app:tint="@color/outline" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif"
-                                    android:text="Vector field visualization"
-                                    android:textColor="@color/on_surface"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:background="@drawable/bg_badge_student_assigned"
-                                    android:paddingHorizontal="8dp"
-                                    android:paddingVertical="2dp"
-                                    android:text="James"
-                                    android:textColor="@color/primary"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal">
-
-                            <ImageView
-                                android:layout_width="24dp"
-                                android:layout_height="24dp"
-                                android:src="@drawable/ic_check_box_outline_blank"
-                                app:tint="@color/outline" />
-
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginStart="12dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif"
-                                    android:text="Final draft assembly"
-                                    android:textColor="@color/on_surface"
-                                    android:textSize="14sp" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="4dp"
-                                    android:background="@drawable/bg_badge_student_assigned"
-                                    android:paddingHorizontal="8dp"
-                                    android:paddingVertical="2dp"
-                                    android:text="Elena"
-                                    android:textColor="@color/primary"
-                                    android:textSize="10sp"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </LinearLayout>
-
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Group Beta -->
-                <LinearLayout
-                    android:id="@+id/group_beta"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_group_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:padding="16dp"
-                    android:layout_marginBottom="12dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="Group Beta"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp" />
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginTop="8dp">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="24dp"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-
-                            <TextView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="48dp"
-                                android:background="@drawable/bg_avatar_stroke"
-                                android:backgroundTint="@color/surface_container_highest"
-                                android:gravity="center"
-                                android:text="+1"
-                                android:textColor="@color/outline"
-                                android:textSize="10sp"
-                                android:textStyle="bold" />
-                        </FrameLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="1/4 tasks done"
-                            android:textColor="@color/secondary"
-                            android:textSize="12sp" />
-
-                        <ProgressBar
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="64dp"
-                            android:layout_height="4dp"
-                            android:layout_marginTop="4dp"
-                            android:progressDrawable="@drawable/bg_progress_track"
-                            android:progress="25"
-                            android:progressTint="@color/secondary" />
-                    </LinearLayout>
-                </LinearLayout>
-
-                <!-- Group Gamma -->
-                <LinearLayout
-                    android:id="@+id/group_gamma"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_group_card"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:foreground="?attr/selectableItemBackground"
-                    android:orientation="horizontal"
-                    android:padding="16dp">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="Group Gamma"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp" />
-
-                        <FrameLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="32dp"
-                            android:layout_marginTop="8dp">
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-
-                            <ImageView
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:layout_marginStart="24dp"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-                        </FrameLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="end"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="0/3 tasks done"
-                            android:textColor="@color/secondary"
-                            android:textSize="12sp" />
-
-                        <ProgressBar
-                            style="?android:attr/progressBarStyleHorizontal"
-                            android:layout_width="64dp"
-                            android:layout_height="4dp"
-                            android:layout_marginTop="4dp"
-                            android:progressDrawable="@drawable/bg_progress_track"
-                            android:progress="0"
-                            android:progressTint="@color/secondary" />
-                    </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+                android:nestedScrollingEnabled="false" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

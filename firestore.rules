@@ -1,0 +1,93 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{uid} {
+      allow read, write: if request.auth.uid == uid;
+    }
+
+    // Notifications collection (top-level)
+    match /notifications/{notificationId} {
+      // Users can only read and update their own notifications
+      allow read, update: if request.auth.uid == resource.data.recipientId;
+
+      // Only Cloud Functions (server) can create notifications
+      allow create: if false;
+      allow delete: if false;
+    }
+
+    // Courses collection
+    match /courses/{courseId} {
+      // Teacher can create and update their own courses
+      allow create: if request.auth != null
+          && request.resource.data.teacherId == request.auth.uid;
+
+      allow update: if request.auth.uid == resource.data.teacherId
+          || (request.resource.data.diff(resource.data).affectedKeys()
+              .hasOnly(['studentIds']));
+
+      // Teacher and enrolled students can read
+      allow read: if request.auth.uid == resource.data.teacherId
+          || resource.data.studentIds.hasAny([request.auth.uid]);
+
+      allow delete: if request.auth.uid == resource.data.teacherId;
+
+      // Assignments subcollection
+      match /assignments/{assignmentId} {
+        // Teacher of the course can create/update/delete
+        allow write: if request.auth.uid ==
+            get(/databases/$(database)/documents/courses/$(courseId)).data.teacherId;
+
+        // Teacher and enrolled students can read
+        allow read: if request.auth.uid ==
+            get(/databases/$(database)/documents/courses/$(courseId)).data.teacherId
+            || get(/databases/$(database)/documents/courses/$(courseId))
+                .data.studentIds.hasAny([request.auth.uid]);
+
+        // Groups subcollection
+        match /groups/{groupId} {
+
+          // Teacher and enrolled students can read all groups
+          allow read: if request.auth.uid ==
+              get(/databases/$(database)/documents/courses/$(courseId)).data.teacherId
+              || get(/databases/$(database)/documents/courses/$(courseId))
+                  .data.studentIds.hasAny([request.auth.uid]);
+
+          // Students cannot create groups manually — creation is handled
+          // exclusively by the join logic (only via the app's join flow)
+          // We allow creation only if the student is enrolled AND
+          // they are setting themselves as the first member and leader
+          allow create: if get(/databases/$(database)/documents/courses/$(courseId))
+                  .data.studentIds.hasAny([request.auth.uid])
+              && request.resource.data.memberIds.hasAll([request.auth.uid])
+              && request.resource.data.leaderId == request.auth.uid
+              && request.resource.data.memberIds.size() == 1;
+
+          // Members can update the group (joining, task counts)
+          // BUT only the leader can rename it
+          allow update: if
+              // Any member can update memberIds, isFull, taskCount, completedTaskCount
+              (resource.data.memberIds.hasAny([request.auth.uid])
+                  && !request.resource.data.diff(resource.data).affectedKeys()
+                      .hasAny(['name', 'leaderId']))
+              ||
+              // Only the leader can rename the group
+              (request.auth.uid == resource.data.leaderId
+                  && request.resource.data.diff(resource.data).affectedKeys()
+                      .hasOnly(['name']));
+
+          // Nobody can delete a group from the client
+          allow delete: if false;
+
+          // Tasks subcollection
+          match /tasks/{taskId} {
+            // Only group members can read and write tasks
+            allow read, write: if get(/databases/$(database)/documents/courses/$(courseId)
+                /assignments/$(assignmentId)/groups/$(groupId))
+                .data.memberIds.hasAny([request.auth.uid]);
+          }
+        }
+      }
+    }
+  }
+}

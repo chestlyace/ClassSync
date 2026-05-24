@@ -106,6 +106,21 @@
                         android:background="@drawable/bg_avatar_placeholder"
                         android:backgroundTint="@color/primary_fixed" />
 
+                    <!-- Avatar image (loaded from URL) -->
+                    <FrameLayout
+                        android:id="@+id/avatar_image_container"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_gravity="center"
+                        android:visibility="gone">
+                        <ImageView
+                            android:id="@+id/avatar_image"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            android:contentDescription="Avatar" />
+                    </FrameLayout>
+
                     <!-- Initials -->
                     <TextView
                         android:id="@+id/avatar_initials"

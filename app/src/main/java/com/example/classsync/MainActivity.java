@@ -10,6 +10,7 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.classsync.data.UserSession;
+import com.example.classsync.data.firebase.AuthRepository;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             // Use a custom item selected listener for role-aware navigation
             bottomNav.setOnItemSelectedListener(item -> {
                 UserSession session = new UserSession(this);
-                boolean isTeacher = "TEACHER".equals(session.getUserRole());
+                boolean isTeacher = AuthRepository.ROLE_TEACHER.equals(session.getUserRole());
                 int itemId = item.getItemId();
 
                 // Build NavOptions to pop back to the role-appropriate home destination
@@ -80,11 +81,13 @@ public class MainActivity extends AppCompatActivity {
 
                 // Manage bottom nav active indicator colors dynamically
                 UserSession session = new UserSession(this);
-                boolean isTeacher = "TEACHER".equals(session.getUserRole());
+                boolean isTeacher = AuthRepository.ROLE_TEACHER.equals(session.getUserRole());
                 if (isTeacher) {
-                    bottomNav.setItemActiveIndicatorColor(androidx.core.content.ContextCompat.getColorStateList(this, R.color.secondary_container));
+                    bottomNav.setItemActiveIndicatorColor(
+                            androidx.core.content.ContextCompat.getColorStateList(this, R.color.secondary_container));
                 } else {
-                    bottomNav.setItemActiveIndicatorColor(androidx.core.content.ContextCompat.getColorStateList(this, R.color.primary_fixed));
+                    bottomNav.setItemActiveIndicatorColor(
+                            androidx.core.content.ContextCompat.getColorStateList(this, R.color.primary_fixed));
                 }
 
                 bottomNav.setVisibility(View.VISIBLE);
@@ -112,7 +115,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Sets the selected bottom nav item without triggering the OnItemSelectedListener.
+     * Sets the selected bottom nav item without triggering the
+     * OnItemSelectedListener.
      * This prevents infinite navigation loops when syncing highlight state.
      */
     private void setSelectedItemSilently(int itemId) {
@@ -124,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
             // Re-attach the listener
             bottomNav.setOnItemSelectedListener(item -> {
                 UserSession session = new UserSession(this);
-                boolean isTeacher = "TEACHER".equals(session.getUserRole());
+                boolean isTeacher = AuthRepository.ROLE_TEACHER.equals(session.getUserRole());
                 int selectedId = item.getItemId();
                 int homeDestId = isTeacher ? R.id.nav_home : R.id.studentHomeFragment;
                 NavOptions navOptions = new NavOptions.Builder()

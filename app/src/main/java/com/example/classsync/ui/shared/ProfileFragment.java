@@ -1,9 +1,12 @@
 package com.example.classsync.ui.shared;
 
+import android.app.AlertDialog;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -11,23 +14,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.example.classsync.R;
 import com.example.classsync.data.UserSession;
+import com.example.classsync.data.firebase.AuthRepository;
 
 public class ProfileFragment extends Fragment {
 
     private boolean isTeacher = false;
+    private UserSession session;
+    private AuthRepository authRepository;
 
     // Header & Info views
     private ImageButton btnBack, btnSettings;
-    private View avatarBorder, avatarBg;
+    private View avatarBorder, avatarBg, avatarImageContainer;
     private TextView avatarInitials;
+    private ImageView avatarImage;
     private FrameLayout btnEditAvatar;
     private TextView profileName, profileRole;
     private LinearLayout roleBadge;
@@ -42,6 +53,9 @@ public class ProfileFragment extends Fragment {
     // Menu list views
     private ImageView menuIconProfile, menuIconNotifications, menuIconPassword, menuIconAccessibility;
 
+    private final ActivityResultLauncher<String> imagePicker =
+            registerForActivityResult(new ActivityResultContracts.GetContent(), this::onImagePicked);
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,8 +66,9 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        UserSession session = new UserSession(requireContext());
-        isTeacher = "TEACHER".equals(session.getUserRole());
+        session = new UserSession(requireContext());
+        authRepository = new AuthRepository(requireContext());
+        isTeacher = AuthRepository.ROLE_TEACHER.equals(session.getUserRole());
 
         // Dynamic theme color selection (Teacher: Green, Student: Blue)
         int themeColorRes = isTeacher ? R.color.secondary : R.color.primary;
@@ -69,6 +84,8 @@ public class ProfileFragment extends Fragment {
         avatarBorder = view.findViewById(R.id.avatar_border);
         avatarBg = view.findViewById(R.id.avatar_bg);
         avatarInitials = view.findViewById(R.id.avatar_initials);
+        avatarImage = view.findViewById(R.id.avatar_image);
+        avatarImageContainer = view.findViewById(R.id.avatar_image_container);
         btnEditAvatar = view.findViewById(R.id.btn_edit_avatar);
 
         profileName = view.findViewById(R.id.profile_name);
@@ -93,23 +110,31 @@ public class ProfileFragment extends Fragment {
         menuIconAccessibility = view.findViewById(R.id.menu_icon_accessibility);
 
         // Setup dynamic profile info & bind stats visibility
+        String displayName = session.getUserName().isEmpty()
+                ? (isTeacher ? "Teacher" : "Student")
+                : session.getUserName();
+        String initials = buildInitials(displayName);
+
         if (isTeacher) {
-            profileName.setText("Prof. Sarah Miller");
+            profileName.setText(displayName);
             profileRole.setText("Teacher");
-            avatarInitials.setText("SM");
+            avatarInitials.setText(initials);
             roleBadgeIcon.setImageResource(R.drawable.ic_school);
 
             statsStudentContainer.setVisibility(View.GONE);
             statsTeacherContainer.setVisibility(View.VISIBLE);
         } else {
-            profileName.setText("Alex Johnson");
+            profileName.setText(displayName);
             profileRole.setText("Student");
-            avatarInitials.setText("AJ");
+            avatarInitials.setText(initials);
             roleBadgeIcon.setImageResource(R.drawable.ic_school);
 
             statsStudentContainer.setVisibility(View.VISIBLE);
             statsTeacherContainer.setVisibility(View.GONE);
         }
+
+        // Load avatar if present
+        loadAvatar(session.getAvatarUrl());
 
         // Apply Dynamic Theme Colors to Header elements
         btnBack.setImageTintList(ContextCompat.getColorStateList(requireContext(), themeColorStateListRes));
@@ -150,21 +175,91 @@ public class ProfileFragment extends Fragment {
             Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
         });
 
-        // Setup settings menu actions
-        View.OnClickListener menuClickListener = v -> {
-            Toast.makeText(requireContext(), "Opening option...", Toast.LENGTH_SHORT).show();
-        };
+        // Avatar edit button -> pick image
+        btnEditAvatar.setOnClickListener(v -> {
+            imagePicker.launch("image/*");
+        });
 
-        view.findViewById(R.id.btn_edit_profile).setOnClickListener(menuClickListener);
+        // Setup settings menu actions
+        view.findViewById(R.id.btn_edit_profile).setOnClickListener(v -> showEditNameDialog());
         view.findViewById(R.id.btn_notification_prefs).setOnClickListener(menuClickListener);
         view.findViewById(R.id.btn_change_password).setOnClickListener(menuClickListener);
         view.findViewById(R.id.btn_accessibility).setOnClickListener(menuClickListener);
 
         // Setup Logout Section action
         view.findViewById(R.id.btn_logout).setOnClickListener(v -> {
-            session.logout();
+            authRepository.logout();
             NavHostFragment.findNavController(this).navigate(R.id.loginFragment);
             Toast.makeText(requireContext(), "Logged out successfully", Toast.LENGTH_SHORT).show();
         });
+    }
+
+    private final View.OnClickListener menuClickListener = v -> {
+        Toast.makeText(requireContext(), "Opening option...", Toast.LENGTH_SHORT).show();
+    };
+
+    private void showEditNameDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setTitle("Edit profile name");
+
+        EditText input = new EditText(requireContext());
+        input.setText(session.getUserName());
+        input.setSelection(input.getText().length());
+        builder.setView(input);
+
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            String newName = input.getText().toString().trim();
+            if (newName.isEmpty()) {
+                Toast.makeText(requireContext(), "Name cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            authRepository.updateProfileName(newName,
+                    () -> {
+                        profileName.setText(newName);
+                        avatarInitials.setText(buildInitials(newName));
+                        Toast.makeText(requireContext(), "Name updated", Toast.LENGTH_SHORT).show();
+                    },
+                    () -> Toast.makeText(requireContext(), "Failed to update name", Toast.LENGTH_SHORT).show()
+            );
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void onImagePicked(Uri imageUri) {
+        if (imageUri == null) return;
+        authRepository.uploadAvatar(imageUri,
+                () -> {
+                    loadAvatar(session.getAvatarUrl());
+                    Toast.makeText(requireContext(), "Avatar updated", Toast.LENGTH_SHORT).show();
+                },
+                () -> Toast.makeText(requireContext(), "Failed to upload avatar", Toast.LENGTH_SHORT).show()
+        );
+    }
+
+    private void loadAvatar(String url) {
+        if (url == null || url.isEmpty()) {
+            avatarImage.setVisibility(View.GONE);
+            avatarInitials.setVisibility(View.VISIBLE);
+            return;
+        }
+        avatarImage.setVisibility(View.VISIBLE);
+        avatarInitials.setVisibility(View.GONE);
+        Glide.with(this)
+                .load(url)
+                .transform(new CircleCrop())
+                .into(avatarImage);
+    }
+
+    @NonNull
+    private String buildInitials(@NonNull String fullName) {
+        String[] parts = fullName.trim().split("\\s+");
+        if (parts.length == 0 || parts[0].isEmpty()) {
+            return "CS";
+        }
+
+        String first = parts[0].substring(0, 1).toUpperCase();
+        String second = parts.length > 1 ? parts[1].substring(0, 1).toUpperCase() : "";
+        return first + second;
     }
 }
