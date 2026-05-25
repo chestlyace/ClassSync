@@ -15,12 +15,17 @@
           <targets>
             <Target type="DEFAULT_BOOT">
               <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=/home/ace/.android/avd/Medium_Phone.avd" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
                 <DeviceId pluginId="PhysicalDevice" identifier="serial=R5CN80V05YB" />
               </handle>
             </Target>
             <Target type="DEFAULT_BOOT">
               <handle>
-                <DeviceId pluginId="LocalEmulator" identifier="path=/home/ace/.android/avd/Medium_Phone.avd" />
+                <DeviceId pluginId="PhysicalDevice" identifier="serial=HA1KYPPB" />
               </handle>
             </Target>
           </targets>

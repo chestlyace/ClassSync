@@ -1,29 +1,30 @@
 package com.example.classsync;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
+
+// WorkManager / local notifications (preserved for reference)
+// import android.Manifest;
+// import android.content.pm.PackageManager;
+// import android.os.Build;
+// import androidx.core.app.ActivityCompat;
+// import androidx.work.ExistingPeriodicWorkPolicy;
+// import androidx.work.PeriodicWorkRequest;
+// import androidx.work.WorkManager;
+// import com.example.classsync.notification.NotificationHelper;
+// import com.example.classsync.worker.DeadlineReminderWorker;
+// import java.util.concurrent.TimeUnit;
 
 import com.example.classsync.data.UserSession;
 import com.example.classsync.data.firebase.AuthRepository;
-import com.example.classsync.notification.NotificationHelper;
-import com.example.classsync.worker.DeadlineReminderWorker;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,9 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        NotificationHelper.createNotificationChannels(this);
-        scheduleDeadlineReminders();
-        requestNotificationPermission();
+        // WorkManager / local notifications (preserved for reference)
+        // NotificationHelper.createNotificationChannels(this);
+        // scheduleDeadlineReminders();
+        // requestNotificationPermission();
 
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.nav_host_fragment);
@@ -174,27 +176,28 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void scheduleDeadlineReminders() {
-        PeriodicWorkRequest reminderWork = new PeriodicWorkRequest.Builder(
-                DeadlineReminderWorker.class, 15, TimeUnit.MINUTES)
-                .build();
-
-        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
-                "deadline_reminders",
-                ExistingPeriodicWorkPolicy.KEEP,
-                reminderWork
-        );
-    }
-
-    private void requestNotificationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
-            }
-        }
-    }
+    // WorkManager / local notifications (preserved for reference)
+    // private void scheduleDeadlineReminders() {
+    //     PeriodicWorkRequest reminderWork = new PeriodicWorkRequest.Builder(
+    //             DeadlineReminderWorker.class, 15, TimeUnit.MINUTES)
+    //             .build();
+    //
+    //     WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+    //             "deadline_reminders",
+    //             ExistingPeriodicWorkPolicy.KEEP,
+    //             reminderWork
+    //     );
+    // }
+    //
+    // private void requestNotificationPermission() {
+    //     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+    //         if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+    //                 != PackageManager.PERMISSION_GRANTED) {
+    //             ActivityCompat.requestPermissions(this,
+    //                     new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1001);
+    //         }
+    //     }
+    // }
 
     @Override
     public boolean onSupportNavigateUp() {

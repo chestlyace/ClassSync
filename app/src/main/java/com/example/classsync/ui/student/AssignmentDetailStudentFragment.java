@@ -4,6 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -22,8 +26,18 @@ public class AssignmentDetailStudentFragment extends Fragment {
     private String assignmentTitle;
     private int maxGroupSize;
 
+    private String groupId;
+    private String groupName;
+    private boolean isLeader;
+    private boolean justJoined;
+
     private GroupRepository groupRepository;
     private UserSession userSession;
+
+    private Button btnJoinGroup, btnViewGroup;
+    private TextView statusTitle, statusSubtitle;
+    private ImageView statusIcon;
+    private LinearLayout statusBanner;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +62,14 @@ public class AssignmentDetailStudentFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        statusBanner = view.findViewById(R.id.group_status_banner);
+        statusTitle = view.findViewById(R.id.group_status_title);
+        statusSubtitle = view.findViewById(R.id.group_status_subtitle);
+        statusIcon = view.findViewById(R.id.group_status_icon);
+
+        btnJoinGroup = view.findViewById(R.id.btn_group_lobby);
+        btnViewGroup = view.findViewById(R.id.btn_view_group);
+
         view.findViewById(R.id.btn_back).setOnClickListener(v -> {
             NavHostFragment.findNavController(this).navigateUp();
         });
@@ -56,50 +78,87 @@ public class AssignmentDetailStudentFragment extends Fragment {
             Toast.makeText(requireContext(), "Settings clicked", Toast.LENGTH_SHORT).show();
         });
 
-        view.findViewById(R.id.btn_group_lobby).setOnClickListener(v -> {
-            Bundle args = new Bundle();
-            args.putString("courseId", courseId);
-            args.putString("assignmentId", assignmentId);
-            args.putString("assignmentTitle", assignmentTitle);
-            args.putInt("maxGroupSize", maxGroupSize);
-            NavHostFragment.findNavController(this)
-                    .navigate(R.id.groupLobbyFragment, args);
+        btnJoinGroup.setOnClickListener(v -> {
+            String uid = userSession.getUserUid();
+            String name = userSession.getUserName();
+            if (uid.isEmpty() || name.isEmpty()) return;
+
+            btnJoinGroup.setEnabled(false);
+            btnJoinGroup.setText("Joining...");
+
+            groupRepository.joinGroup(courseId, assignmentId, maxGroupSize,
+                    uid, name,
+                    joinedGroupName -> {
+                        justJoined = true;
+                        checkGroupStatus();
+                    },
+                    error -> {
+                        btnJoinGroup.setEnabled(true);
+                        btnJoinGroup.setText("Join group");
+                        Toast.makeText(requireContext(),
+                                "Failed to join group. Try again.", Toast.LENGTH_SHORT).show();
+                    }
+            );
+        });
+
+        btnViewGroup.setOnClickListener(v -> {
+            navigateToWorkspace();
         });
 
         view.findViewById(R.id.btn_submit_assignment).setOnClickListener(v -> {
             Toast.makeText(requireContext(), "Submit clicked", Toast.LENGTH_SHORT).show();
         });
 
-        String uid = userSession.getUserUid();
-        if (!uid.isEmpty()) {
-            groupRepository.checkStudentGroupStatus(courseId, assignmentId, uid,
-                    new GroupRepository.StudentGroupCallback() {
-                        @Override
-                        public void onAlreadyInGroup(@NonNull String groupId,
-                                                     @NonNull String groupName,
-                                                     boolean isLeader) {
-                            Bundle args = new Bundle();
-                            args.putString("courseId", courseId);
-                            args.putString("assignmentId", assignmentId);
-                            args.putString("assignmentTitle", assignmentTitle);
-                            args.putString("groupId", groupId);
-                            args.putString("groupName", groupName);
-                            args.putBoolean("isLeader", isLeader);
-                            NavHostFragment.findNavController(AssignmentDetailStudentFragment.this)
-                                    .navigate(R.id.groupWorkspaceFragment, args);
-                        }
+        checkGroupStatus();
+    }
 
-                        @Override
-                        public void onNotInGroup() {
-                            View btn = getView() != null
-                                    ? getView().findViewById(R.id.btn_group_lobby)
-                                    : null;
-                            if (btn != null) {
-                                btn.setVisibility(View.VISIBLE);
-                            }
+    private void checkGroupStatus() {
+        String uid = userSession.getUserUid();
+        if (uid.isEmpty()) return;
+
+        groupRepository.checkStudentGroupStatus(courseId, assignmentId, uid,
+                new GroupRepository.StudentGroupCallback() {
+                    @Override
+                    public void onAlreadyInGroup(@NonNull String gid,
+                                                 @NonNull String gname,
+                                                 boolean leader) {
+                        groupId = gid;
+                        groupName = gname;
+                        isLeader = leader;
+
+                        statusTitle.setText("You are in " + gname);
+                        statusSubtitle.setText("Your group is ready. Collaborate with your team and track your progress.");
+                        statusIcon.setImageResource(R.drawable.ic_groups);
+                        btnJoinGroup.setVisibility(View.GONE);
+                        btnViewGroup.setVisibility(View.VISIBLE);
+
+                        if (justJoined) {
+                            justJoined = false;
+                            navigateToWorkspace();
                         }
                     }
-            );
-        }
+
+                    @Override
+                    public void onNotInGroup() {
+                        statusTitle.setText("Not in a group yet");
+                        statusSubtitle.setText("This assignment requires a group of 3-4 members. Join an existing group or create a new one to begin.");
+                        statusIcon.setImageResource(R.drawable.ic_group_add);
+                        btnJoinGroup.setVisibility(View.VISIBLE);
+                        btnViewGroup.setVisibility(View.GONE);
+                    }
+                }
+        );
+    }
+
+    private void navigateToWorkspace() {
+        Bundle args = new Bundle();
+        args.putString("courseId", courseId);
+        args.putString("assignmentId", assignmentId);
+        args.putString("assignmentTitle", assignmentTitle);
+        args.putString("groupId", groupId);
+        args.putString("groupName", groupName);
+        args.putBoolean("isLeader", isLeader);
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.groupWorkspaceFragment, args);
     }
 }

@@ -262,6 +262,7 @@
 
             <!-- Group Status Banner -->
             <LinearLayout
+                android:id="@+id/group_status_banner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/bg_banner_secondary"
@@ -275,12 +276,14 @@
                     android:layout_marginBottom="16dp">
 
                     <LinearLayout
+                        android:id="@+id/group_status_icon_container"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/bg_button_primary_light"
                         android:backgroundTint="#1A006C53"
                         android:gravity="center">
                         <ImageView
+                            android:id="@+id/group_status_icon"
                             android:layout_width="20dp"
                             android:layout_height="20dp"
                             android:src="@drawable/ic_group_add"
@@ -294,6 +297,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/group_status_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif-bold"
@@ -302,6 +306,7 @@
                             android:textSize="16sp" />
 
                         <TextView
+                            android:id="@+id/group_status_subtitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="sans-serif"
@@ -317,9 +322,21 @@
                     android:layout_height="52dp"
                     android:backgroundTint="@color/secondary"
                     android:fontFamily="sans-serif-medium"
-                    android:text="Find or create a group"
+                    android:text="Join group"
                     android:textColor="@color/on_secondary"
                     android:textSize="14sp"
+                    app:cornerRadius="8dp" />
+
+                <Button
+                    android:id="@+id/btn_view_group"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:backgroundTint="@color/secondary"
+                    android:fontFamily="sans-serif-medium"
+                    android:text="View group"
+                    android:textColor="@color/on_secondary"
+                    android:textSize="14sp"
+                    android:visibility="gone"
                     app:cornerRadius="8dp" />
             </LinearLayout>
 

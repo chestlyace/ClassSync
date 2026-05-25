@@ -20,18 +20,19 @@ import com.example.classsync.data.UserSession;
 import com.example.classsync.data.firebase.FirestorePaths;
 import com.example.classsync.data.firebase.GroupRepository;
 import com.example.classsync.data.model.TaskItem;
-import com.example.classsync.notification.NotificationHelper;
-import com.google.firebase.firestore.FieldValue;
+// Client-side notification imports (preserved for reference)
+// import com.example.classsync.notification.NotificationHelper;
+// import com.google.firebase.firestore.FieldValue;
+// import java.util.HashMap;
+// import java.util.HashSet;
+// import java.util.Set;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class GroupWorkspaceFragment extends Fragment {
 
@@ -54,7 +55,8 @@ public class GroupWorkspaceFragment extends Fragment {
     private TaskItemAdapter taskAdapter;
     private ListenerRegistration taskListener;
 
-    private final Set<String> notifiedTaskIds = new HashSet<>();
+    // Client-side notification dedup set (preserved for reference)
+    // private final Set<String> notifiedTaskIds = new HashSet<>();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -146,7 +148,6 @@ public class GroupWorkspaceFragment extends Fragment {
 
                     tasks.clear();
                     int completedCount = 0;
-                    String currentUid = userSession.getUserUid();
 
                     for (QueryDocumentSnapshot doc : snapshots) {
                         TaskItem task = doc.toObject(TaskItem.class);
@@ -154,31 +155,29 @@ public class GroupWorkspaceFragment extends Fragment {
                             tasks.add(task);
                             if (task.isDone()) completedCount++;
 
-                            // Detect task just completed by another group member
-                            if (task.isDone()
-                                    && !notifiedTaskIds.contains(task.getTaskId())
-                                    && !currentUid.equals(task.getAssignedTo())) {
-                                notifiedTaskIds.add(task.getTaskId());
-
-                                HashMap<String, Object> notif = new HashMap<>();
-                                notif.put("recipientId", currentUid);
-                                notif.put("type", "task_done");
-                                notif.put("title", task.getAssignedName() + " completed a task");
-                                notif.put("body", "\"" + task.getTitle() + "\"");
-                                notif.put("courseId", courseId);
-                                notif.put("assignmentId", assignmentId);
-                                notif.put("isRead", false);
-                                notif.put("createdAt", FieldValue.serverTimestamp());
-
-                                db.collection(FirestorePaths.NOTIFICATIONS).add(notif);
-
-                                NotificationHelper.showNotification(
-                                        requireContext(),
-                                        "classsync_task_done",
-                                        task.getAssignedName() + " completed a task",
-                                        "\"" + task.getTitle() + "\""
-                                );
-                            }
+                            // Client-side notification on task completion (preserved for reference)
+                            // String currentUid = userSession.getUserUid();
+                            // if (task.isDone()
+                            //         && !notifiedTaskIds.contains(task.getTaskId())
+                            //         && !currentUid.equals(task.getAssignedTo())) {
+                            //     notifiedTaskIds.add(task.getTaskId());
+                            //     HashMap<String, Object> notif = new HashMap<>();
+                            //     notif.put("recipientId", currentUid);
+                            //     notif.put("type", "task_done");
+                            //     notif.put("title", task.getAssignedName() + " completed a task");
+                            //     notif.put("body", "\"" + task.getTitle() + "\"");
+                            //     notif.put("courseId", courseId);
+                            //     notif.put("assignmentId", assignmentId);
+                            //     notif.put("isRead", false);
+                            //     notif.put("createdAt", FieldValue.serverTimestamp());
+                            //     db.collection(FirestorePaths.NOTIFICATIONS).add(notif);
+                            //     NotificationHelper.showNotification(
+                            //             requireContext(),
+                            //             "classsync_task_done",
+                            //             task.getAssignedName() + " completed a task",
+                            //             "\"" + task.getTitle() + "\""
+                            //     );
+                            // }
                         }
                     }
                     taskAdapter.notifyDataSetChanged();

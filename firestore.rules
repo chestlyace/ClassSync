@@ -11,9 +11,8 @@ service cloud.firestore {
       // Users can only read and update their own notifications
       allow read, update: if request.auth.uid == resource.data.recipientId;
 
-      // Users can create their own notifications (client-side logic)
-      allow create: if request.auth != null
-          && request.resource.data.recipientId == request.auth.uid;
+      // Only Cloud Functions (server) can create notifications
+      allow create: if false;
       allow delete: if false;
     }
 
