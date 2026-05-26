@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.classsync.R;
+import com.example.classsync.data.cache.DataCache;
 import com.example.classsync.data.firebase.FirestorePaths;
 import com.example.classsync.data.model.Assignment;
 import com.example.classsync.data.model.Group;
@@ -48,6 +49,7 @@ public class AssignmentOverviewTeacherFragment extends Fragment {
     private TeacherGroupAdapter adapter;
     private ListenerRegistration groupListener;
     private Assignment currentAssignment;
+    private DataCache dataCache;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class AssignmentOverviewTeacherFragment extends Fragment {
             assignmentId = getArguments().getString("assignmentId", "");
             assignmentTitle = getArguments().getString("assignmentTitle", "");
         }
+        dataCache = DataCache.getInstance();
     }
 
     @Nullable
@@ -91,6 +94,15 @@ public class AssignmentOverviewTeacherFragment extends Fragment {
     }
 
     private void loadAssignmentDetails() {
+        String docPath = FirestorePaths.assignmentDocument(courseId, assignmentId);
+
+        // Populate from cache immediately
+        Assignment cached = dataCache.getDocument(docPath);
+        if (cached != null) {
+            populateAssignmentDetails(cached);
+        }
+
+        // Fetch fresh data from Firestore
         FirebaseFirestore.getInstance()
                 .collection(FirestorePaths.COURSES)
                 .document(courseId)
@@ -103,26 +115,31 @@ public class AssignmentOverviewTeacherFragment extends Fragment {
                     currentAssignment = doc.toObject(Assignment.class);
                     if (currentAssignment == null) return;
 
-                    String desc = currentAssignment.getDescription();
-                    if (desc != null && !desc.isEmpty()) {
-                        descriptionText.setText(desc);
-                    }
-
-                    Timestamp due = currentAssignment.getDueDate();
-                    if (due != null) {
-                        Date date = due.toDate();
-                        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy, hh:mm a", Locale.US);
-                        dueDateText.setText(sdf.format(date));
-
-                        if (date.before(new Date())) {
-                            statusBadge.setText("Overdue");
-                            statusBadge.setBackgroundResource(R.drawable.bg_badge_overdue);
-                        } else {
-                            statusBadge.setText("Upcoming");
-                            statusBadge.setBackgroundResource(R.drawable.bg_badge_upcoming);
-                        }
-                    }
+                    dataCache.putDocument(docPath, currentAssignment);
+                    populateAssignmentDetails(currentAssignment);
                 });
+    }
+
+    private void populateAssignmentDetails(Assignment assignment) {
+        String desc = assignment.getDescription();
+        if (desc != null && !desc.isEmpty()) {
+            descriptionText.setText(desc);
+        }
+
+        Timestamp due = assignment.getDueDate();
+        if (due != null) {
+            Date date = due.toDate();
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy, hh:mm a", Locale.US);
+            dueDateText.setText(sdf.format(date));
+
+            if (date.before(new Date())) {
+                statusBadge.setText("Overdue");
+                statusBadge.setBackgroundResource(R.drawable.bg_badge_overdue);
+            } else {
+                statusBadge.setText("Upcoming");
+                statusBadge.setBackgroundResource(R.drawable.bg_badge_upcoming);
+            }
+        }
     }
 
     private void listenForGroups() {

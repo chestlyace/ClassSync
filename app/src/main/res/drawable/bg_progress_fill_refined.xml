@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base gradient -->
+    <item>
+        <shape>
+            <gradient
+                android:angle="0"
+                android:startColor="#0D9373"
+                android:centerColor="#0A7A5F"
+                android:endColor="#1a56db"
+                android:type="linear" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+
+    <!-- Gloss effect on top -->
+    <item>
+        <shape>
+            <gradient
+                android:angle="270"
+                android:startColor="#26FFFFFF"
+                android:endColor="#00FFFFFF"
+                android:type="linear" />
+            <corners android:radius="4dp" />
+        </shape>
+    </item>
+</layer-list>

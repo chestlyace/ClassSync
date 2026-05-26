@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Base gradient with more sophisticated color stops -->
+    <item>
+        <shape>
+            <gradient
+                android:angle="135"
+                android:startColor="#0F7D63"
+                android:centerColor="#0A5F4C"
+                android:endColor="#002D5C"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- Overlay gradient for depth -->
+    <item>
+        <shape>
+            <gradient
+                android:angle="45"
+                android:startColor="#1A0D9373"
+                android:endColor="#1A003fb1"
+                android:type="linear" />
+        </shape>
+    </item>
+
+    <!-- Subtle grain texture overlay -->
+    <item>
+        <shape>
+            <solid android:color="#08FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

@@ -14,6 +14,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.SetOptions;
 import com.google.firebase.firestore.WriteBatch;
@@ -223,6 +224,35 @@ public class GroupRepository {
                     }
                 })
                 .addOnFailureListener(e -> callback.onNotInGroup());
+    }
+
+    @NonNull
+    public ListenerRegistration listenForGroupStatus(
+            @NonNull String courseId,
+            @NonNull String assignmentId,
+            @NonNull String studentUid,
+            @NonNull StudentGroupCallback callback
+    ) {
+        return db.collection(FirestorePaths.COURSES).document(courseId)
+                .collection(FirestorePaths.ASSIGNMENTS).document(assignmentId)
+                .collection(FirestorePaths.GROUPS)
+                .whereArrayContains("memberIds", studentUid)
+                .limit(1)
+                .addSnapshotListener((snapshots, error) -> {
+                    if (error != null || snapshots == null) {
+                        callback.onNotInGroup();
+                        return;
+                    }
+                    if (!snapshots.isEmpty()) {
+                        DocumentSnapshot groupDoc = snapshots.getDocuments().get(0);
+                        String groupId = groupDoc.getId();
+                        String groupName = groupDoc.getString("name");
+                        boolean isLeader = studentUid.equals(groupDoc.getString("leaderId"));
+                        callback.onAlreadyInGroup(groupId, groupName, isLeader);
+                    } else {
+                        callback.onNotInGroup();
+                    }
+                });
     }
 
     public void renameGroup(

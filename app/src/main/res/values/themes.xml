@@ -63,4 +63,9 @@
         <item name="android:textSize">12sp</item>
         <item name="android:letterSpacing">0.02</item>
     </style>
+
+    <style name="ShapeAppearance.Fab.Modern" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">28dp</item>
+    </style>
 </resources>

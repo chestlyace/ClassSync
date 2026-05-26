@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0A0E14">
+
+    <!-- Animated gradient header with asymmetric design -->
+    <FrameLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="280dp">
+
+        <!-- Base gradient background -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg_teacher_home_gradient_refined" />
+
+        <!-- Decorative geometric element -->
+        <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="-60dp"
+            android:layout_marginEnd="-40dp"
+            android:alpha="0.15"
+            android:background="@drawable/bg_circle_accent"
+            android:elevation="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="28dp"
+            android:paddingBottom="36dp">
+
+            <!-- Top bar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:letterSpacing="0.08"
+                        android:text="CLASS"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        android:alpha="0.6" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="-4dp"
+                        android:fontFamily="sans-serif-black"
+                        android:letterSpacing="0.08"
+                        android:text="SYNC"
+                        android:textColor="#FFFFFF"
+                        android:textSize="11sp"
+                        android:alpha="0.6" />
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/teacher_avatar"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_avatar_modern"
+                    android:contentDescription="Avatar"
+                    android:padding="2dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_profile"
+                    app:tint="@color/on_secondary" />
+            </LinearLayout>
+
+            <!-- Dynamic greeting with time-based messaging -->
+            <TextView
+                android:id="@+id/tv_greeting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:fontFamily="sans-serif-black"
+                android:letterSpacing="-0.03"
+                android:lineSpacingExtra="6dp"
+                android:textColor="#FFFFFF"
+                android:textSize="34sp"
+                android:includeFontPadding="false"
+                tools:text="Good morning,\nDr. Smith" />
+
+            <!-- Course count indicator -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:background="@drawable/bg_pill_translucent"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="10dp"
+                android:elevation="2dp">
+
+                <View
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:background="@drawable/bg_dot_pulse" />
+
+                <TextView
+                    android:id="@+id/tv_course_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.02"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:alpha="0.95"
+                    tools:text="3 active courses" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- Main content with slide-up effect -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="240dp"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="96dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp">
+
+            <!-- Stats Dashboard Grid -->
+            <LinearLayout
+                android:id="@+id/stats_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_stats_container_refined"
+                android:elevation="6dp"
+                android:padding="24dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.06"
+                    android:text="OVERVIEW"
+                    android:textColor="#8B92A0"
+                    android:textSize="10sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:orientation="horizontal">
+
+                    <!-- Total Students Stat -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginEnd="8dp"
+                        android:background="@drawable/bg_stat_item_refined"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_group"
+                            app:tint="#0D9373"
+                            android:alpha="0.8" />
+
+                        <TextView
+                            android:id="@+id/tv_total_students"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-black"
+                            android:letterSpacing="-0.02"
+                            android:textColor="#FFFFFF"
+                            android:textSize="28sp"
+                            tools:text="74" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.03"
+                            android:text="Students"
+                            android:textColor="#6B7280"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+
+                    <!-- Total Assignments Stat -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_stat_item_refined"
+                        android:orientation="vertical"
+                        android:padding="18dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_assignment"
+                            app:tint="#1a56db"
+                            android:alpha="0.8" />
+
+                        <TextView
+                            android:id="@+id/tv_total_assignments"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:fontFamily="sans-serif-black"
+                            android:letterSpacing="-0.02"
+                            android:textColor="#FFFFFF"
+                            android:textSize="28sp"
+                            tools:text="9" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.03"
+                            android:text="Assignments"
+                            android:textColor="#6B7280"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Due Soon Stat - Full Width -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_stat_item_accent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_timer"
+                        app:tint="#ba1a1a" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="16dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_due_soon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:letterSpacing="-0.02"
+                            android:textColor="#FFFFFF"
+                            android:textSize="24sp"
+                            tools:text="2" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:letterSpacing="0.03"
+                            android:text="Due within 48 hours"
+                            android:textColor="#9CA3AF"
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Courses Section Header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-black"
+                        android:letterSpacing="-0.02"
+                        android:text="Active Courses"
+                        android:textColor="#FFFFFF"
+                        android:textSize="22sp" />
+
+                    <View
+                        android:layout_width="32dp"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="4dp"
+                        android:background="@drawable/bg_accent_underline" />
+                </LinearLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_add_course"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="0.04"
+                    android:text="NEW"
+                    android:textSize="11sp"
+                    app:cornerRadius="20dp"
+                    app:icon="@drawable/ic_add"
+                    app:iconGravity="textStart"
+                    app:iconSize="16dp"
+                    app:backgroundTint="#0D9373"
+                    style="@style/Widget.Material3.Button.ElevatedButton" />
+            </LinearLayout>
+
+            <!-- Courses RecyclerView -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_courses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_course_modern" />
+
+            <!-- Empty State -->
+            <LinearLayout
+                android:id="@+id/empty_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="32dp"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:alpha="0.3"
+                    android:src="@drawable/ic_assignment"
+                    app:tint="#FFFFFF" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="sans-serif-black"
+                    android:letterSpacing="-0.01"
+                    android:text="No courses yet"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="sans-serif"
+                    android:text="Create your first course to get started"
+                    android:textAlignment="center"
+                    android:textColor="#9CA3AF"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating Action Button with modern design -->
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab_add_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="88dp"
+        android:fontFamily="sans-serif-black"
+        android:letterSpacing="0.04"
+        android:text="CREATE COURSE"
+        android:textSize="12sp"
+        app:backgroundTint="#0D9373"
+        app:elevation="6dp"
+        app:icon="@drawable/ic_add"
+        app:iconSize="20dp"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Fab.Modern" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -73,7 +73,13 @@ service cloud.firestore {
               // Only the leader can rename the group
               (request.auth.uid == resource.data.leaderId
                   && request.resource.data.diff(resource.data).affectedKeys()
-                      .hasOnly(['name']));
+                      .hasOnly(['name']))
+              ||
+              // Non-member can join if group is not full
+              (!resource.data.memberIds.hasAny([request.auth.uid])
+                  && resource.data.memberIds.size() < resource.data.maxSize
+                  && request.resource.data.diff(resource.data).affectedKeys()
+                      .hasOnly(['memberIds', 'memberNames', 'isFull']));
 
           // Nobody can delete a group from the client
           allow delete: if false;

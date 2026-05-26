@@ -33,6 +33,14 @@
         { "fieldPath": "recipientId", "order": "ASCENDING" },
         { "fieldPath": "isRead", "order": "ASCENDING" }
       ]
+    },
+    {
+      "collectionGroup": "groups",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "isFull", "order": "ASCENDING" },
+        { "fieldPath": "groupNumber", "order": "ASCENDING" }
+      ]
     }
   ],
   "fieldOverrides": []

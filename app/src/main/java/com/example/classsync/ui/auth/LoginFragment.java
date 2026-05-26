@@ -34,7 +34,8 @@ public class LoginFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
@@ -68,9 +69,8 @@ public class LoginFragment extends Fragment {
             NavHostFragment.findNavController(this).navigate(R.id.registerFragment);
         });
 
-        forgotPassword.setOnClickListener(v ->
-                Toast.makeText(requireContext(), "Password reset is not implemented yet.", Toast.LENGTH_SHORT).show()
-        );
+        forgotPassword.setOnClickListener(v -> Toast
+                .makeText(requireContext(), "Password reset is not implemented yet.", Toast.LENGTH_SHORT).show());
     }
 
     private void attemptLogin() {
@@ -97,7 +97,6 @@ public class LoginFragment extends Fragment {
                     return;
                 }
                 setFormEnabled(true);
-                authRepository.saveFcmToken();
                 navigateToHome(user.getRole());
             }
 

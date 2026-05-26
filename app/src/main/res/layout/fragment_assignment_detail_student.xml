@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -32,24 +33,26 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_course_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-medium"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="CS504: Advanced UX Research"
                 android:textColor="@color/on_surface_variant"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="CS504: Advanced UX Research" />
 
             <TextView
+                android:id="@+id/tv_assignment_title_appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:text="Research Synthesis Report"
                 android:textColor="@color/primary"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:text="Research Synthesis Report" />
         </LinearLayout>
 
         <ImageButton
@@ -82,13 +85,14 @@
 
             <!-- Main Heading -->
             <TextView
+                android:id="@+id/tv_assignment_title_main"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="sans-serif-bold"
-                android:text="Research Synthesis Report"
                 android:textColor="@color/on_surface"
                 android:textSize="24sp"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                tools:text="Research Synthesis Report" />
 
             <!-- Assignment Card -->
             <LinearLayout
@@ -112,31 +116,34 @@
                     android:layout_marginBottom="16dp">
 
                     <ImageView
+                        android:id="@+id/img_type_icon"
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:src="@drawable/ic_groups"
                         app:tint="@color/primary_container" />
 
                     <TextView
+                        android:id="@+id/tv_type_badge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Group Assignment"
                         android:textColor="@color/primary_container"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        tools:text="Group Assignment" />
                 </LinearLayout>
 
                 <!-- Description -->
                 <TextView
+                    android:id="@+id/tv_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif"
                     android:lineSpacingExtra="4dp"
-                    android:text="Synthesize your interview findings into a cohesive report. Identify five key personas, develop empathy maps, and define the primary problem statements for your assigned user base. Ensure all sources are cited according to university standards."
                     android:textColor="@color/on_surface_variant"
                     android:textSize="14sp"
-                    android:layout_marginBottom="24dp" />
+                    android:layout_marginBottom="24dp"
+                    tools:text="Synthesize your interview findings into a cohesive report. Identify five key personas, develop empathy maps, and define the primary problem statements for your assigned user base. Ensure all sources are cited according to university standards." />
 
                 <View
                     android:layout_width="match_parent"
@@ -180,12 +187,13 @@
                                 android:textSize="12sp" />
 
                             <TextView
+                                android:id="@+id/tv_posted_by_name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-bold"
-                                android:text="Dr. Sarah Chen"
                                 android:textColor="@color/on_surface"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                tools:text="Dr. Sarah Chen" />
                         </LinearLayout>
                     </LinearLayout>
 
@@ -224,12 +232,13 @@
                                 android:textSize="12sp" />
 
                             <TextView
+                                android:id="@+id/tv_due_date"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="sans-serif-bold"
-                                android:text="Oct 18, 11:59 PM"
                                 android:textColor="@color/on_surface"
-                                android:textSize="14sp" />
+                                android:textSize="14sp"
+                                tools:text="Oct 18, 11:59 PM" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
@@ -251,13 +260,14 @@
                     app:tint="@color/tertiary" />
 
                 <TextView
+                    android:id="@+id/tv_deadline_countdown"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:fontFamily="sans-serif-bold"
-                    android:text="Due in 4 days"
                     android:textColor="@color/tertiary"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    tools:text="Due in 4 days" />
             </LinearLayout>
 
             <!-- Group Status Banner -->

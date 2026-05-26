@@ -38,7 +38,8 @@ public class RegisterFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
@@ -48,9 +49,7 @@ public class RegisterFragment extends Fragment {
         authRepository = new AuthRepository(requireContext());
 
         backButton = view.findViewById(R.id.back_button);
-        backButton.setOnClickListener(v ->
-            NavHostFragment.findNavController(this).navigateUp()
-        );
+        backButton.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
 
         LinearLayout teacherCard = view.findViewById(R.id.role_teacher);
         LinearLayout studentCard = view.findViewById(R.id.role_student);
@@ -83,9 +82,7 @@ public class RegisterFragment extends Fragment {
 
         registerButton.setOnClickListener(v -> attemptRegistration());
 
-        loginLink.setOnClickListener(v ->
-            NavHostFragment.findNavController(this).navigate(R.id.loginFragment)
-        );
+        loginLink.setOnClickListener(v -> NavHostFragment.findNavController(this).navigate(R.id.loginFragment));
     }
 
     private void attemptRegistration() {
@@ -133,7 +130,6 @@ public class RegisterFragment extends Fragment {
                 }
                 setFormEnabled(true);
                 Toast.makeText(requireContext(), "Account created successfully", Toast.LENGTH_SHORT).show();
-                authRepository.saveFcmToken();
                 navigateToHome(user.getRole());
             }
 

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.classsync.R;
+import com.example.classsync.data.cache.DataCache;
 import com.example.classsync.data.firebase.FirestorePaths;
 import com.example.classsync.data.model.Assignment;
 // Client-side notification imports (preserved for reference)
@@ -24,21 +25,26 @@ import com.example.classsync.data.model.Assignment;
 // import java.util.HashMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.Map;
 
 public class StudentHomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private StudentAssignmentsAdapter adapter;
     private List<Assignment> allAssignments;
-    private com.google.firebase.firestore.ListenerRegistration courseListener;
+    private ListenerRegistration courseListener;
+    private final Map<String, ListenerRegistration> assignmentListeners = new HashMap<>();
+    private final DataCache dataCache = DataCache.getInstance();
 
     @Nullable
     @Override
@@ -85,10 +91,64 @@ public class StudentHomeFragment extends Fragment {
                     for (QueryDocumentSnapshot doc : snapshots) {
                         courseIds.add(doc.getId());
                     }
-                    fetchAllAssignmentsForStudent(courseIds);
+                    updateAssignmentListeners(courseIds);
                     // Client-side notification check (preserved for reference):
                     // checkNewAssignments(courseIds, uid);
                 });
+    }
+
+    private void updateAssignmentListeners(List<String> courseIds) {
+        // Remove listeners for courses no longer in the list
+        for (String id : new HashSet<>(assignmentListeners.keySet())) {
+            if (!courseIds.contains(id)) {
+                ListenerRegistration reg = assignmentListeners.remove(id);
+                if (reg != null) reg.remove();
+            }
+        }
+
+        // Add listeners for new courses
+        for (String courseId : courseIds) {
+            if (!assignmentListeners.containsKey(courseId)) {
+                ListenerRegistration reg = FirebaseFirestore.getInstance()
+                        .collection(FirestorePaths.COURSES)
+                        .document(courseId)
+                        .collection(FirestorePaths.ASSIGNMENTS)
+                        .orderBy("dueDate", Query.Direction.ASCENDING)
+                        .addSnapshotListener((snapshots, error) -> {
+                            if (error != null || snapshots == null) return;
+
+                            List<Assignment> assignments = new ArrayList<>();
+                            for (QueryDocumentSnapshot doc : snapshots) {
+                                Assignment a = doc.toObject(Assignment.class);
+                                if (a != null) assignments.add(a);
+                            }
+                            dataCache.putCollection(
+                                    FirestorePaths.assignmentsCollection(courseId),
+                                    assignments);
+                            mergeAssignmentsFromAllCourses();
+                        });
+                assignmentListeners.put(courseId, reg);
+            }
+        }
+
+        // Populate from cache immediately while listeners sync
+        mergeAssignmentsFromAllCourses();
+    }
+
+    private void mergeAssignmentsFromAllCourses() {
+        List<Assignment> merged = new ArrayList<>();
+        for (String courseId : assignmentListeners.keySet()) {
+            String cacheKey = FirestorePaths.assignmentsCollection(courseId);
+            List<Assignment> cached = dataCache.getCollection(cacheKey);
+            if (cached != null) {
+                merged.addAll(cached);
+            }
+        }
+        Collections.sort(merged,
+                Comparator.comparing(a -> a.getDueDate() != null ? a.getDueDate() : new com.google.firebase.Timestamp(0, 0)));
+        allAssignments.clear();
+        allAssignments.addAll(merged);
+        adapter.notifyDataSetChanged();
     }
 
     // Client-side notification logic (preserved for reference)
@@ -146,43 +206,15 @@ public class StudentHomeFragment extends Fragment {
     //             .apply();
     // }
 
-    private void fetchAllAssignmentsForStudent(List<String> courseIds) {
-        if (courseIds.isEmpty()) {
-            allAssignments.clear();
-            adapter.notifyDataSetChanged();
-            return;
-        }
-
-        List<Assignment> merged = new ArrayList<>();
-        AtomicInteger remaining = new AtomicInteger(courseIds.size());
-
-        for (String courseId : courseIds) {
-            FirebaseFirestore.getInstance()
-                    .collection(FirestorePaths.COURSES)
-                    .document(courseId)
-                    .collection(FirestorePaths.ASSIGNMENTS)
-                    .orderBy("dueDate", Query.Direction.ASCENDING)
-                    .get()
-                    .addOnSuccessListener(snapshots -> {
-                        for (QueryDocumentSnapshot doc : snapshots) {
-                            merged.add(doc.toObject(Assignment.class));
-                        }
-                        if (remaining.decrementAndGet() == 0) {
-                            Collections.sort(merged,
-                                    Comparator.comparing(a -> a.getDueDate() != null ? a.getDueDate() : new com.google.firebase.Timestamp(0, 0)));
-                            allAssignments.clear();
-                            allAssignments.addAll(merged);
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-        }
-    }
-
     @Override
     public void onDestroyView() {
         if (courseListener != null) {
             courseListener.remove();
         }
+        for (ListenerRegistration reg : assignmentListeners.values()) {
+            if (reg != null) reg.remove();
+        }
+        assignmentListeners.clear();
         super.onDestroyView();
     }
 }

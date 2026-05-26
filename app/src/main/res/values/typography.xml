@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Intermediate Parent Styles for AAPT2 Dot-Notation Lookup -->
+    <style name="TextAppearance.ClassSync" parent="android:TextAppearance" />
+    <style name="TextAppearance.ClassSync.Display" parent="TextAppearance.ClassSync" />
+    <style name="TextAppearance.ClassSync.Headline" parent="TextAppearance.ClassSync" />
+    <style name="TextAppearance.ClassSync.Title" parent="TextAppearance.ClassSync" />
+    <style name="TextAppearance.ClassSync.Body" parent="TextAppearance.ClassSync" />
+    <style name="TextAppearance.ClassSync.Label" parent="TextAppearance.ClassSync" />
+    <style name="TextAppearance.ClassSync.Numeric" parent="TextAppearance.ClassSync" />
+
+    <!-- Display Typography - For large impactful text -->
+    <style name="TextAppearance.ClassSync.Display.Large">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:letterSpacing">-0.03</item>
+        <item name="android:lineSpacingExtra">4dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="TextAppearance.ClassSync.Display.Medium">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- Headline Typography - For section headers -->
+    <style name="TextAppearance.ClassSync.Headline.Large">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="TextAppearance.ClassSync.Headline.Medium">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- Title Typography - For card titles -->
+    <style name="TextAppearance.ClassSync.Title.Large">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">-0.01</item>
+        <item name="android:lineSpacingExtra">2dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <!-- Body Typography - For content text -->
+    <style name="TextAppearance.ClassSync.Body.Large">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:lineSpacingMultiplier">1.4</item>
+        <item name="android:textColor">#E5E7EB</item>
+    </style>
+
+    <style name="TextAppearance.ClassSync.Body.Medium">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:letterSpacing">0.01</item>
+        <item name="android:textColor">#9CA3AF</item>
+    </style>
+
+    <!-- Label Typography - For metadata and captions -->
+    <style name="TextAppearance.ClassSync.Label.Large">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#9CA3AF</item>
+    </style>
+
+    <style name="TextAppearance.ClassSync.Label.Medium">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textSize">11sp</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textColor">#6B7280</item>
+    </style>
+
+    <style name="TextAppearance.ClassSync.Label.Small">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:letterSpacing">0.06</item>
+        <item name="android:textColor">#8B92A0</item>
+    </style>
+
+    <!-- Monospace Typography - For codes -->
+    <style name="TextAppearance.ClassSync.Monospace">
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:letterSpacing">0.1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#A78BFA</item>
+    </style>
+
+    <!-- Numeric Typography - For statistics -->
+    <style name="TextAppearance.ClassSync.Numeric.Large">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="TextAppearance.ClassSync.Numeric.Medium">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+</resources>

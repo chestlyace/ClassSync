@@ -1,41 +1,40 @@
 package com.example.classsync.data.firebase;
 
 import android.content.Context;
+import android.net.Uri;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.example.classsync.data.UserSession;
 import com.example.classsync.data.model.AppUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Source;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.Timestamp;
 
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 public class AuthRepository {
+    public static final String ROLE_TEACHER = "TEACHER";
+    public static final String ROLE_STUDENT = "STUDENT";
+
     private static final String USERS_COLLECTION = "users";
-    public static final String ROLE_TEACHER = "teacher";
-    public static final String ROLE_STUDENT = "student";
 
     private final FirebaseAuth firebaseAuth;
     private final FirebaseFirestore firestore;
-    private final FirebaseStorage storage;
     private final UserSession userSession;
 
     public AuthRepository(@NonNull Context context) {
         this.firebaseAuth = FirebaseAuth.getInstance();
         this.firestore = FirebaseFirestore.getInstance();
-        this.storage = FirebaseStorage.getInstance();
         this.userSession = new UserSession(context.getApplicationContext());
     }
 
@@ -44,8 +43,7 @@ public class AuthRepository {
             @NonNull String email,
             @NonNull String password,
             @NonNull String role,
-            @NonNull AuthCallback callback
-    ) {
+            @NonNull AuthCallback callback) {
         firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener(authResult -> {
                     FirebaseUser firebaseUser = authResult.getUser();
@@ -56,43 +54,40 @@ public class AuthRepository {
 
                     String normalizedName = fullName.trim();
                     String normalizedEmail = email.trim().toLowerCase(Locale.US);
-                    String normalizedRole = normalizeRole(role);
+                    String normalizedRole = role.trim().toUpperCase(Locale.US);
 
                     Map<String, Object> userDocument = new HashMap<>();
                     userDocument.put("uid", firebaseUser.getUid());
-                    userDocument.put("name", normalizedName);
+                    userDocument.put("fullName", normalizedName);
                     userDocument.put("email", normalizedEmail);
                     userDocument.put("role", normalizedRole);
-                    userDocument.put("avatarUrl", "");
-                    userDocument.put("fcmToken", "");
                     userDocument.put("createdAt", FieldValue.serverTimestamp());
 
                     firestore.collection(USERS_COLLECTION)
                             .document(firebaseUser.getUid())
                             .set(userDocument)
                             .addOnSuccessListener(unused -> {
-                                AppUser appUser = new AppUser(
-                                        firebaseUser.getUid(),
-                                        normalizedName,
-                                        normalizedEmail,
-                                        normalizedRole,
-                                        "",
-                                        "",
-                                        null
-                                );
-                                userSession.saveUser(appUser);
-                                callback.onSuccess(appUser);
+                                UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                                        .setDisplayName(normalizedName)
+                                        .build();
+
+                                firebaseUser.updateProfile(profileUpdates)
+                                        .addOnCompleteListener(task -> {
+                                            AppUser appUser = new AppUser(
+                                                    firebaseUser.getUid(),
+                                                    normalizedName,
+                                                    normalizedEmail,
+                                                    normalizedRole);
+                                            userSession.saveUser(appUser);
+                                            callback.onSuccess(appUser);
+                                        });
                             })
-                            .addOnFailureListener(error ->
-                                    firebaseUser.delete()
-                                            .addOnCompleteListener(task ->
-                                                    callback.onError(getErrorMessage(error, "We created the account but failed to save the profile. Please try again."))
-                                            )
-                            );
+                            .addOnFailureListener(error -> firebaseUser.delete()
+                                    .addOnCompleteListener(task -> callback.onError(getErrorMessage(error,
+                                            "We created the account but failed to save the profile. Please try again."))));
                 })
-                .addOnFailureListener(error ->
-                        callback.onError(getErrorMessage(error, "Registration failed. Please try again."))
-                );
+                .addOnFailureListener(
+                        error -> callback.onError(getErrorMessage(error, "Registration failed. Please try again.")));
     }
 
     public void login(@NonNull String email, @NonNull String password, @NonNull AuthCallback callback) {
@@ -105,9 +100,7 @@ public class AuthRepository {
                     }
                     loadUserProfile(firebaseUser, callback);
                 })
-                .addOnFailureListener(error ->
-                        callback.onError(getErrorMessage(error, "Wrong credentials. Please try again."))
-                );
+                .addOnFailureListener(error -> callback.onError(getErrorMessage(error, "Invalid email or password.")));
     }
 
     public void restoreSession(@NonNull AuthCallback callback) {
@@ -129,30 +122,69 @@ public class AuthRepository {
         userSession.logout();
     }
 
+    public void updateProfileName(@NonNull String newName, @NonNull Runnable onSuccess, @NonNull Runnable onFailure) {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            onFailure.run();
+            return;
+        }
+        firestore.collection(USERS_COLLECTION)
+                .document(firebaseUser.getUid())
+                .update("fullName", newName.trim())
+                .addOnSuccessListener(unused -> {
+                    userSession.setUserName(newName.trim());
+                    onSuccess.run();
+                })
+                .addOnFailureListener(e -> onFailure.run());
+    }
+
+    public void uploadAvatar(@NonNull Uri imageUri, @NonNull Runnable onSuccess, @NonNull Runnable onFailure) {
+        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+        if (firebaseUser == null) {
+            onFailure.run();
+            return;
+        }
+        StorageReference avatarRef = FirebaseStorage.getInstance()
+                .getReference("avatars/" + firebaseUser.getUid());
+        avatarRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> avatarRef.getDownloadUrl()
+                        .addOnSuccessListener(uri -> {
+                            String avatarUrl = uri.toString();
+                            firestore.collection(USERS_COLLECTION)
+                                    .document(firebaseUser.getUid())
+                                    .update("avatarUrl", avatarUrl)
+                                    .addOnSuccessListener(unused -> {
+                                        userSession.setAvatarUrl(avatarUrl);
+                                        onSuccess.run();
+                                    })
+                                    .addOnFailureListener(e -> onFailure.run());
+                        })
+                        .addOnFailureListener(e -> onFailure.run()))
+                .addOnFailureListener(e -> onFailure.run());
+    }
+
     private void loadUserProfile(@NonNull FirebaseUser firebaseUser, @NonNull AuthCallback callback) {
         firestore.collection(USERS_COLLECTION)
                 .document(firebaseUser.getUid())
-                .get()
+                .get(Source.SERVER)
                 .addOnSuccessListener(documentSnapshot -> handleUserDocument(firebaseUser, documentSnapshot, callback))
-                .addOnFailureListener(error ->
-                        callback.onError(getErrorMessage(error, "Failed to load your profile."))
-                );
+                .addOnFailureListener(
+                        error -> callback.onError(getErrorMessage(error, "Failed to load your profile.")));
     }
 
     private void handleUserDocument(
             @NonNull FirebaseUser firebaseUser,
             @NonNull DocumentSnapshot documentSnapshot,
-            @NonNull AuthCallback callback
-    ) {
-        String fullName = readDisplayName(documentSnapshot);
+            @NonNull AuthCallback callback) {
+        String fullName = documentSnapshot.getString("fullName");
         String email = documentSnapshot.getString("email");
-        String role = normalizeRole(documentSnapshot.getString("role"));
-        String avatarUrl = valueOrEmpty(documentSnapshot.getString("avatarUrl"));
-        String fcmToken = valueOrEmpty(documentSnapshot.getString("fcmToken"));
-        Timestamp createdAt = documentSnapshot.getTimestamp("createdAt");
+        String role = documentSnapshot.getString("role");
 
         if (!documentSnapshot.exists() || TextUtils.isEmpty(fullName) || TextUtils.isEmpty(role)) {
-            callback.onError("Your account profile is missing. Please contact support or register again.");
+            String displayName = !TextUtils.isEmpty(fullName) ? fullName : safeDisplayName(firebaseUser);
+            String resolvedEmail = !TextUtils.isEmpty(email) ? email : safeEmail(firebaseUser.getEmail());
+            String resolvedRole = !TextUtils.isEmpty(role) ? role : ROLE_STUDENT;
+            rebuildUserDocument(firebaseUser, displayName, resolvedEmail, resolvedRole, callback);
             return;
         }
 
@@ -164,13 +196,34 @@ public class AuthRepository {
                 firebaseUser.getUid(),
                 fullName.trim(),
                 resolvedEmail,
-                role,
-                avatarUrl,
-                fcmToken,
-                createdAt
-        );
+                role.trim().toUpperCase(Locale.US));
         userSession.saveUser(appUser);
         callback.onSuccess(appUser);
+    }
+
+    private void rebuildUserDocument(
+            @NonNull FirebaseUser firebaseUser,
+            @NonNull String displayName,
+            @NonNull String email,
+            @NonNull String role,
+            @NonNull AuthCallback callback) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("uid", firebaseUser.getUid());
+        data.put("fullName", displayName);
+        data.put("email", email);
+        data.put("role", role);
+        data.put("createdAt", FieldValue.serverTimestamp());
+
+        firestore.collection(USERS_COLLECTION)
+                .document(firebaseUser.getUid())
+                .set(data)
+                .addOnSuccessListener(unused -> {
+                    AppUser appUser = new AppUser(firebaseUser.getUid(), displayName, email, role);
+                    userSession.saveUser(appUser);
+                    callback.onSuccess(appUser);
+                })
+                .addOnFailureListener(e ->
+                        callback.onError("Your account profile is missing. Please contact support or register again."));
     }
 
     @NonNull
@@ -185,88 +238,11 @@ public class AuthRepository {
     }
 
     @NonNull
-    private String valueOrEmpty(String value) {
-        return value == null ? "" : value;
-    }
-
-    @NonNull
-    private String normalizeRole(String role) {
-        if (TextUtils.isEmpty(role)) {
-            return "";
-        }
-        String normalizedRole = role.trim().toLowerCase(Locale.US);
-        if (ROLE_TEACHER.equals(normalizedRole)) {
-            return ROLE_TEACHER;
-        }
-        return ROLE_STUDENT.equals(normalizedRole) ? ROLE_STUDENT : normalizedRole;
-    }
-
-    public void saveFcmToken() {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null) return;
-
-        FirebaseMessaging.getInstance().getToken()
-                .addOnSuccessListener(token ->
-                        firestore.collection(USERS_COLLECTION)
-                                .document(user.getUid())
-                                .update("fcmToken", token)
-                );
-    }
-
-    public void updateProfileName(@NonNull String newName, @Nullable Runnable onSuccess, @Nullable Runnable onError) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null) {
-            if (onError != null) onError.run();
-            return;
-        }
-        firestore.collection(USERS_COLLECTION)
-                .document(user.getUid())
-                .update("name", newName.trim())
-                .addOnSuccessListener(unused -> {
-                    userSession.setUserName(newName.trim());
-                    if (onSuccess != null) onSuccess.run();
-                })
-                .addOnFailureListener(unused -> {
-                    if (onError != null) onError.run();
-                });
-    }
-
-    public void uploadAvatar(@NonNull android.net.Uri imageUri, @Nullable Runnable onSuccess, @Nullable Runnable onError) {
-        FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null) {
-            if (onError != null) onError.run();
-            return;
-        }
-        StorageReference ref = storage.getReference("avatars/" + user.getUid() + ".jpg");
-        ref.putFile(imageUri)
-                .addOnSuccessListener(taskSnapshot ->
-                        ref.getDownloadUrl().addOnSuccessListener(downloadUri -> {
-                            String url = downloadUri.toString();
-                            firestore.collection(USERS_COLLECTION)
-                                    .document(user.getUid())
-                                    .update("avatarUrl", url)
-                                    .addOnSuccessListener(unused -> {
-                                        userSession.setAvatarUrl(url);
-                                        if (onSuccess != null) onSuccess.run();
-                                    })
-                                    .addOnFailureListener(unused -> {
-                                        if (onError != null) onError.run();
-                                    });
-                        })
-                )
-                .addOnFailureListener(unused -> {
-                    if (onError != null) onError.run();
-                });
-    }
-
-    @NonNull
-    private String readDisplayName(@NonNull DocumentSnapshot documentSnapshot) {
-        String name = documentSnapshot.getString("name");
-        if (!TextUtils.isEmpty(name)) {
-            return name;
-        }
-
-        String legacyFullName = documentSnapshot.getString("fullName");
-        return legacyFullName == null ? "" : legacyFullName;
+    private String safeDisplayName(@NonNull FirebaseUser user) {
+        String name = user.getDisplayName();
+        if (!TextUtils.isEmpty(name)) return name.trim();
+        String email = user.getEmail();
+        if (!TextUtils.isEmpty(email)) return email.substring(0, email.indexOf('@')).trim();
+        return "User";
     }
 }

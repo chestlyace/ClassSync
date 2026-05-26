@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -118,191 +119,12 @@
                 android:clipToPadding="false">
 
                 <LinearLayout
+                    android:id="@+id/members_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
-                    android:paddingVertical="4dp">
-
-                    <!-- Member 1: Alex -->
-                    <LinearLayout
-                        android:id="@+id/chip_member_alex"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginEnd="16dp">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/bg_avatar_placeholder"
-                                android:backgroundTint="#D8E2FF" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="A"
-                                android:textColor="@color/primary"
-                                android:textSize="20sp"
-                                android:fontFamily="sans-serif-medium" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Alex"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Member 2: Sam -->
-                    <LinearLayout
-                        android:id="@+id/chip_member_sam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginEnd="16dp">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/bg_avatar_placeholder"
-                                android:backgroundTint="#E8DEF8" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="S"
-                                android:textColor="#6750A4"
-                                android:textSize="20sp"
-                                android:fontFamily="sans-serif-medium" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Sam"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Member 3: Jordan (SELECTED) -->
-                    <LinearLayout
-                        android:id="@+id/chip_member_jordan"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:layout_marginEnd="16dp">
-
-                        <FrameLayout
-                            android:layout_width="60dp"
-                            android:layout_height="60dp">
-                            <!-- Outer border circle -->
-                            <View
-                                android:layout_width="56dp"
-                                android:layout_height="56dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/bg_avatar_placeholder"
-                                android:backgroundTint="@color/primary_container" />
-                            <!-- Inner content circle -->
-                            <View
-                                android:layout_width="52dp"
-                                android:layout_height="52dp"
-                                android:layout_gravity="center"
-                                android:background="@drawable/bg_avatar_placeholder"
-                                android:backgroundTint="@color/surface_container_lowest" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="J"
-                                android:textColor="@color/primary"
-                                android:textSize="18sp"
-                                android:fontFamily="sans-serif-bold" />
-                            <!-- Checkmark Badge on top-right -->
-                            <FrameLayout
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
-                                android:layout_gravity="top|end"
-                                android:background="@drawable/bg_avatar_placeholder"
-                                android:backgroundTint="@color/primary"
-                                android:padding="2dp">
-                                <ImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:src="@drawable/ic_check"
-                                    app:tint="@color/on_primary" />
-                            </FrameLayout>
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="Jordan"
-                            android:textColor="@color/primary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Member 4: Taylor -->
-                    <LinearLayout
-                        android:id="@+id/chip_member_taylor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:clickable="true"
-                        android:focusable="true">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:background="@drawable/bg_avatar_placeholder"
-                                android:backgroundTint="#FAD8FD" />
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:text="T"
-                                android:textColor="#B3261E"
-                                android:textSize="20sp"
-                                android:fontFamily="sans-serif-medium" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Taylor"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:paddingVertical="4dp" />
             </HorizontalScrollView>
 
             <!-- Deadline Toggle Section -->
@@ -337,165 +159,34 @@
             </LinearLayout>
 
             <!-- Date Picker Row -->
-            <HorizontalScrollView
-                android:id="@+id/scroll_date_picker"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
+                android:gravity="center_vertical"
                 android:layout_marginBottom="24dp"
-                android:clipToPadding="false">
+                android:visibility="gone"
+                android:id="@+id/date_picker_row">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/selected_date_text"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="sans-serif-medium"
+                    android:textColor="@color/on_surface"
+                    android:textSize="14sp"
+                    tools:text="Oct 16, Wed" />
+
+                <Button
+                    android:id="@+id/btn_pick_date"
+                    style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Date 1: Oct 15 -->
-                    <LinearLayout
-                        android:layout_width="56dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/bg_date_card_inactive"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Oct"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="15"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif"
-                            android:text="Tue"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Date 2: Oct 16 (SELECTED) -->
-                    <LinearLayout
-                        android:layout_width="56dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/bg_date_card_active"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Oct"
-                            android:textColor="@color/primary"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="16"
-                            android:textColor="@color/primary"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif"
-                            android:text="Wed"
-                            android:textColor="@color/primary"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Date 3: Oct 17 -->
-                    <LinearLayout
-                        android:layout_width="56dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/bg_date_card_inactive"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:layout_marginEnd="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Oct"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="17"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif"
-                            android:text="Thu"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Date 4: Oct 18 -->
-                    <LinearLayout
-                        android:layout_width="56dp"
-                        android:layout_height="80dp"
-                        android:background="@drawable/bg_date_card_inactive"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:alpha="0.5">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Oct"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif-bold"
-                            android:text="18"
-                            android:textColor="@color/on_surface"
-                            android:textSize="16sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:fontFamily="sans-serif"
-                            android:text="Fri"
-                            android:textColor="@color/on_surface_variant"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </HorizontalScrollView>
+                    android:text="Change"
+                    android:textColor="@color/primary"
+                    android:fontFamily="sans-serif-medium"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
             <!-- Notes Section -->
             <TextView

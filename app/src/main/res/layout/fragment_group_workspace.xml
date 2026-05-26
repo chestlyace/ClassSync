@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background">
@@ -33,9 +34,9 @@
             android:fontFamily="sans-serif-bold"
             android:ellipsize="end"
             android:singleLine="true"
-            android:text="Group"
             android:textColor="@color/on_surface"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            tools:text="Group 1" />
 
         <ImageButton
             android:id="@+id/btn_rename_group"
@@ -93,123 +94,10 @@
                 android:paddingHorizontal="16dp">
 
                 <LinearLayout
+                    android:id="@+id/members_container"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <!-- Member 1: Alex -->
-                    <LinearLayout
-                        android:layout_width="64dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke"
-                                android:backgroundTint="@color/primary" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Alex"
-                            android:textColor="@color/on_surface"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Member 2: Sam -->
-                    <LinearLayout
-                        android:layout_width="64dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Sam"
-                            android:textColor="@color/on_surface"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Member 3: Jordan -->
-                    <LinearLayout
-                        android:layout_width="64dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Jordan"
-                            android:textColor="@color/on_surface"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                    <!-- Member 4: Taylor -->
-                    <LinearLayout
-                        android:layout_width="64dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:gravity="center"
-                        android:orientation="vertical">
-
-                        <FrameLayout
-                            android:layout_width="56dp"
-                            android:layout_height="56dp">
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/bg_avatar_placeholder"
-                                android:background="@drawable/bg_avatar_stroke" />
-                        </FrameLayout>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:fontFamily="sans-serif-medium"
-                            android:text="Taylor"
-                            android:textColor="@color/on_surface"
-                            android:textSize="12sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
 
             <LinearLayout
@@ -259,7 +147,6 @@
                         android:layout_height="10dp"
                         android:layout_marginTop="12dp"
                         android:progressDrawable="@drawable/bg_progress_track"
-                        android:progress="50"
                         android:progressTint="@color/primary" />
                 </LinearLayout>
 

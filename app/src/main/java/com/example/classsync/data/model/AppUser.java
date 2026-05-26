@@ -14,6 +14,13 @@ public class AppUser {
     public AppUser() {
     }
 
+    public AppUser(String uid, String name, String email, String role) {
+        this.uid = uid;
+        this.name = name;
+        this.email = email;
+        this.role = role;
+    }
+
     public AppUser(
             String uid,
             String name,
